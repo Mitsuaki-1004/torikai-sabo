@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>鳥飼茶房 - 福岡市城南区の日本茶喫茶 | Japanese Tea House Fukuoka</title>
+  <meta name="description" content="福岡市城南区鳥飼にある日本茶喫茶。丁寧に一煎一煎いれたお茶と、閑かな空間でゆったりとした時間をお楽しみください。A serene Japanese tea house in Torikai, Fukuoka."/>
+  <meta property="og:title" content="鳥飼茶房 | Japanese Tea House Fukuoka"/>
+  <meta property="og:description" content="A serene Japanese tea house in Torikai, Fukuoka. Handcrafted single-serve tea in a quiet, unhurried space."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://torikai-sabo.jimdofree.com/"/>
+  <meta property="og:image" content="https://image.jimcdn.com/app/cms/image/transf/dimension=1920x10000:format=jpg/path/s8704c2539aabb152/image/id4df6b1db63555d3/version/1779264650/image.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="canonical" href="https://torikai-sabo.jimdofree.com/"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+JP:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --ink:#1c1810; --ink-mid:#4a4030; --ink-soft:#7a6e60; --ink-faint:#b0a598;
+      --paper:#f8f4ee; --paper-warm:#f0ebe0; --paper-deep:#e8e0d0;
+      --matcha:#3d5c36; --matcha-mid:#5a7a52; --matcha-pale:#c8d8c0;
+      --gold:#a07840; --gold-pale:#d4b87a;
+      --border:rgba(90,70,40,0.15);
+      --ff-jp:'Shippori Mincho','Noto Serif JP',serif;
+      --ff-en:'EB Garamond',Georgia,serif;
+    }
+    html { scroll-behavior:smooth; font-size:16px; }
+    body {
+      font-family:var(--ff-jp); color:var(--ink); line-height:1.9; overflow-x:hidden;
+      background-color:var(--paper);
+      background-image:url('https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/backgroundarea/i061724566fc5eece/version/1775546592/image.png');
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      background-repeat:no-repeat;
+    }
+
+    /* LOADER */
+    #loader {
+      position:fixed; inset:0; background:var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      z-index:9999; transition:opacity .8s ease .2s, visibility .8s ease .2s;
+    }
+    #loader.hide { opacity:0; visibility:hidden; }
+    .loader-inner { text-align:center; }
+    .loader-kanji {
+      font-family:var(--ff-jp); font-size:36px; font-weight:400;
+      letter-spacing:.5em; color:var(--paper-warm);
+      opacity:0; animation:loaderFade 1.6s ease forwards .3s;
+    }
+    .loader-en {
+      font-family:var(--ff-en); font-size:11px; letter-spacing:.45em;
+      color:rgba(240,235,224,0.35); margin-top:.8rem;
+      opacity:0; animation:loaderFade 1.6s ease forwards .7s;
+    }
+    @keyframes loaderFade { to { opacity:1; } }
+
+    /* LANG SWITCH（ナビ内に配置） */
+    .lang-switch {
+      display:flex; gap:0; margin-right:1.2rem;
+    }
+    .lang-btn {
+      font-family:var(--ff-en); font-size:11px; letter-spacing:.15em;
+      padding:5px 11px; border:1px solid var(--border);
+      background:transparent; color:var(--ink-soft);
+      cursor:pointer; transition:all .2s;
+    }
+    .lang-btn:first-child { border-right:none; }
+    .lang-btn.active { background:var(--matcha); color:white; border-color:var(--matcha); }
+
+    /* ナビ右側のグループ */
+    .nav-right { display:flex; align-items:center; }
+
+    /* NAV */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      padding:0 3rem;
+      display:flex; align-items:center; justify-content:space-between;
+      height:64px;
+      background:rgba(248,244,238,0.92);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);
+      transition:all .4s ease;
+    }
+    nav.scrolled { height:54px; background:rgba(248,244,238,0.97); box-shadow:0 1px 20px rgba(0,0,0,0.06); }
+    .nav-logo {
+      font-family:var(--ff-jp); font-size:17px; font-weight:500;
+      letter-spacing:.2em; color:var(--ink); text-decoration:none;
+      display:flex; align-items:center; gap:10px;
+    }
+    .nav-logo img { height:30px; width:auto; opacity:.9; }
+    .nav-links { display:flex; align-items:center; gap:2.5rem; list-style:none; }
+    .nav-links a {
+      font-size:12px; letter-spacing:.18em; color:var(--ink-soft);
+      text-decoration:none; transition:color .2s; font-family:var(--ff-en);
+      text-transform:uppercase;
+    }
+    .nav-links a:hover { color:var(--matcha); }
+    .nav-reserve {
+      font-size:11px; letter-spacing:.18em; padding:8px 20px;
+      border:1px solid var(--gold); color:var(--gold);
+      text-decoration:none; font-family:var(--ff-jp); transition:all .25s;
+    }
+    .nav-reserve:hover { background:var(--gold); color:white; }
+
+    /* HERO */
+    .hero {
+      position:relative; min-height:100vh;
+      display:flex; align-items:center; justify-content:center; overflow:hidden;
+    }
+    .hero-bg {
+      position:absolute; inset:0;
+      background-image:url('https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/backgroundarea/i061724566fc5eece/version/1775546592/image.png');
+      background-size:cover; background-position:center;
+      transform:scale(1.06); transition:transform 10s ease-out;
+    }
+    .hero-bg.loaded { transform:scale(1); }
+    /* 明るめオーバーレイ */
+    .hero-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(
+        180deg,
+        rgba(20,16,10,0.30) 0%,
+        rgba(20,16,10,0.15) 45%,
+        rgba(20,16,10,0.50) 100%
+      );
+    }
+    .hero-content {
+      position:relative; z-index:2;
+      text-align:center; padding:2rem;
+    }
+    .hero-logo { margin-top:3rem; margin-bottom:1.5rem; opacity:0; transform:translateY(12px); transition:opacity 1.4s ease, transform 1.4s ease; }
+    .hero-logo.show { opacity:1; transform:translateY(0); }
+    .hero-logo img { height:130px; width:auto; filter:brightness(0) invert(1); opacity:.92; }
+
+    /* メインタイトル「鳥飼茶房」 */
+    .hero-title {
+      font-size:clamp(44px, 7vw, 72px);
+      font-weight:400; letter-spacing:.28em;
+      color:#f5f0e8; line-height:1.1;
+      margin-bottom:.8rem;
+      text-shadow:
+        0 0 60px rgba(255,255,255,0.15),
+        0 4px 40px rgba(0,0,0,0.4),
+        0 2px 8px rgba(0,0,0,0.3);
+      animation:titleGlow 4s ease-in-out infinite alternate;
+    }
+    @keyframes titleGlow {
+      from { text-shadow: 0 0 60px rgba(255,255,255,0.10), 0 4px 40px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3); }
+      to   { text-shadow: 0 0 80px rgba(255,255,255,0.22), 0 4px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.25); }
+    }
+
+    /* 英語サイト名（控えめに） */
+    .hero-site-en {
+      font-family:var(--ff-en); font-size:clamp(19px,3vw,28px);
+      font-weight:400; letter-spacing:.3em; font-style:italic;
+      color:rgba(240,235,224,0.75); margin-bottom:.7rem;
+      opacity:0; transform:translateY(10px);
+      transition:opacity 1.4s ease, transform 1.4s ease;
+    }
+    .hero-site-en.show { opacity:1; transform:translateY(0); }
+    /* サブテキスト */
+    .hero-site-sub {
+      font-family:var(--ff-en); font-size:clamp(15px,2.5vw,22px); letter-spacing:.32em;
+      color:rgba(240,235,224,0.80); text-transform:uppercase;
+      margin-bottom:0;
+      opacity:0; transition:opacity 1.4s ease;
+    }
+    .hero-site-sub.show { opacity:1; }
+
+    .hero-line { width:1px; height:50px; background:var(--gold-pale); margin:2.2rem auto; opacity:0; transition:opacity 1.2s ease; }
+    .hero-line.show { opacity:.7; }
+    .hero-copy { font-size:19px; letter-spacing:.14em; color:rgba(240,235,224,0.92); line-height:2.4; margin-bottom:.5rem; opacity:0; transform:translateY(8px); transition:opacity 1.2s ease, transform 1.2s ease; }
+    .hero-copy.show { opacity:1; transform:translateY(0); }
+    .hero-copy-en { font-family:var(--ff-en); font-size:15px; letter-spacing:.22em; color:rgba(240,235,224,0.55); font-style:italic; margin-bottom:3rem; opacity:0; transition:opacity 1.2s ease; }
+    .hero-copy-en.show { opacity:1; }
+    .hero-content { position:relative; z-index:2; text-align:center; padding:2rem; }
+    .hero-cta {
+      display:inline-block; padding:14px 44px;
+      border:1px solid rgba(240,235,224,0.55);
+      color:rgba(240,235,224,0.92);
+      font-family:var(--ff-jp); font-size:13px; letter-spacing:.22em;
+      text-decoration:none;
+      opacity:0; transform:translateY(6px);
+      transition:opacity 1.2s ease, transform 1.2s ease;
+    }
+    .hero-cta.show { opacity:1; transform:translateY(0); }
+    .hero-cta:hover { background:rgba(240,235,224,0.14); border-color:rgba(240,235,224,0.85); }
+    .hero-scroll {
+      position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:8px;
+      color:rgba(240,235,224,0.4); font-family:var(--ff-en);
+      font-size:10px; letter-spacing:.3em; text-transform:uppercase;
+    }
+    .hero-scroll-line { width:1px; height:40px; background:rgba(240,235,224,0.3); animation:scrollLine 2s ease-in-out infinite; }
+    @keyframes scrollLine {
+      0%   { transform:scaleY(0); opacity:0; transform-origin:top; }
+      50%  { transform:scaleY(1); opacity:1; transform-origin:top; }
+      100% { transform:scaleY(0); opacity:0; transform-origin:bottom; }
+    }
+
+    /* ★ TEA INTERLUDE（写真主役＋黄緑フィルター） */
+    .tea-drop-section {
+      position:relative;
+      padding:9rem 0 8rem;
+      overflow:hidden; text-align:center;
+      /* お茶の写真をメイン背景に */
+      background-image:url('https://image.jimcdn.com/app/cms/image/transf/dimension=564x10000:format=jpg/path/s8704c2539aabb152/image/i39221e2194b172ae/version/1780447170/image.jpg');
+      background-size:cover;
+      background-position:center;
+    }
+    /* さわやかな黄緑のカラーフィルター（写真が透けて見える） */
+    .tea-drop-section::before {
+      content:'';
+      position:absolute; inset:0;
+      background:rgba(180,210,120,0.55);
+      mix-blend-mode:multiply;
+    }
+    /* 上部にやわらかい光（透明感・清涼感） */
+    .tea-drop-section::after {
+      content:'';
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 35%, rgba(255,255,255,0.35) 0%, transparent 65%);
+      pointer-events:none;
+    }
+    .tea-drop-text {
+      position:relative; z-index:3;
+      font-family:var(--ff-jp); font-size:clamp(15px,2.5vw,20px);
+      letter-spacing:.25em; color:rgba(255,255,255,0.95); line-height:3.2;
+      text-shadow:0 1px 8px rgba(30,50,20,0.3);
+    }
+    .tea-drop-text span { display:block; opacity:0; transform:translateY(8px); transition:opacity .9s ease, transform .9s ease; }
+    .tea-drop-text span.show { opacity:1; transform:translateY(0); }
+
+    /* SECTION BASE */
+    .section-wrap { max-width:900px; margin:0 auto; padding:0 2rem; }
+    .section-header { margin-bottom:4rem; }
+    .section-en { font-family:var(--ff-en); font-size:11px; letter-spacing:.5em; color:var(--gold); text-transform:uppercase; margin-bottom:.6rem; display:block; }
+    .section-title { font-size:clamp(26px,4vw,36px); font-weight:400; letter-spacing:.18em; color:var(--ink); line-height:1.4; }
+    .section-rule { width:30px; height:1px; background:var(--gold); margin-top:1.2rem; }
+
+    /* BILINGUAL helper */
+    .bi { display:block; }
+    .bi-en { font-family:var(--ff-en); font-size:.78em; letter-spacing:.18em; color:var(--ink-soft); font-style:italic; }
+    [data-lang="en"] .bi-jp { display:none; }
+    [data-lang="en"] .bi-en { font-style:normal; font-size:1em; color:inherit; }
+    [data-lang="ja"] .bi-en { display:none; }
+
+    /* ABOUT */
+    .about { padding:9rem 0; background:rgba(248,244,238,0.78); }
+    .about-inner { display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; }
+    .about-text p { font-size:15px; line-height:2.6; color:var(--ink-mid); margin-bottom:1.8rem; }
+    .about-visual { position:relative; }
+    .about-img-main { width:100%; aspect-ratio:3/4; object-fit:cover; display:block; }
+    .about-img-accent {
+      position:absolute; top:-2.5rem; left:-2.5rem;
+      width:55%; aspect-ratio:4/3; object-fit:cover;
+      border:6px solid var(--paper); box-shadow:0 8px 40px rgba(0,0,0,0.12);
+    }
+
+    /* CONCEPT */
+    .concept { padding:9rem 0; background:rgba(240,235,224,0.75); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
+    .concept-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:4rem; border:1px solid var(--border); }
+    .concept-card { padding:3rem 2.2rem; border-right:1px solid var(--border); opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+    .concept-card:last-child { border-right:none; }
+    .concept-card.show { opacity:1; transform:translateY(0); }
+    .concept-card:nth-child(2) { transition-delay:.15s; }
+    .concept-card:nth-child(3) { transition-delay:.3s; }
+    .concept-num { font-family:var(--ff-en); font-size:11px; letter-spacing:.3em; color:var(--ink-faint); margin-bottom:1.8rem; }
+    .concept-kanji { font-size:42px; font-weight:400; color:var(--matcha); letter-spacing:.05em; margin-bottom:1rem; line-height:1; }
+    .concept-card h3 { font-size:16px; font-weight:500; letter-spacing:.15em; color:var(--ink); margin-bottom:.8rem; }
+    .concept-card p { font-size:13px; line-height:2.3; color:var(--ink-soft); }
+
+    /* GALLERY */
+    .gallery { padding:9rem 0; background:rgba(248,244,238,0.78); }
+    .gallery-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-top:4rem; }
+    .gallery-item { overflow:hidden; position:relative; opacity:0; transform:translateY(12px); transition:opacity .7s ease, transform .7s ease; }
+    .gallery-item.show { opacity:1; transform:translateY(0); }
+    .gallery-item:nth-child(2) { transition-delay:.1s; }
+    .gallery-item:nth-child(3) { transition-delay:.2s; }
+    .gallery-item:nth-child(4) { transition-delay:.3s; }
+    .gallery-item img { width:100%; height:100%; object-fit:cover; display:block; aspect-ratio:4/3; transition:transform .7s ease; }
+    /* ★ ズーム大きめ */
+    .gallery-item:hover img { transform:scale(1.10); }
+    .gallery-caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:1.8rem 1.2rem .9rem;
+      background:linear-gradient(transparent, rgba(20,16,10,0.65));
+      font-size:12px; letter-spacing:.15em; color:rgba(255,255,255,0.85);
+    }
+
+    /* RESERVE */
+    .reserve { padding:8rem 0; background:var(--matcha); text-align:center; }
+    .reserve h2 { font-size:clamp(22px,4vw,32px); font-weight:400; letter-spacing:.25em; color:rgba(255,255,255,0.92); margin-bottom:1.5rem; }
+    .reserve p { font-size:14px; letter-spacing:.12em; color:rgba(255,255,255,0.65); line-height:2.4; margin-bottom:2.8rem; }
+    .reserve-btn { display:inline-block; padding:15px 52px; background:rgba(255,255,255,0.92); color:var(--matcha); font-family:var(--ff-jp); font-size:13px; letter-spacing:.22em; text-decoration:none; transition:all .25s; }
+    .reserve-btn:hover { background:white; }
+    .reserve-sns { display:flex; justify-content:center; gap:1.2rem; margin-top:2.5rem; }
+    .reserve-sns a { font-size:12px; letter-spacing:.18em; padding:9px 24px; border:1px solid rgba(255,255,255,0.3); color:rgba(255,255,255,0.7); text-decoration:none; transition:all .2s; }
+    .reserve-sns a:hover { border-color:rgba(255,255,255,0.7); color:white; }
+
+    /* INFO */
+    .info { padding:9rem 0; background:rgba(240,235,224,0.75); }
+    .info-inner { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; margin-top:4rem; }
+    .info-table { width:100%; }
+    .info-table tr { border-bottom:1px solid var(--border); }
+    .info-table tr:first-child { border-top:1px solid var(--border); }
+    .info-table th { font-size:11px; letter-spacing:.25em; color:var(--ink-soft); font-weight:400; padding:1.2rem 0; text-align:left; width:90px; vertical-align:top; padding-top:1.4rem; }
+    .info-table td { font-size:14px; letter-spacing:.08em; color:var(--ink); padding:1.2rem 0 1.2rem 1rem; line-height:2; }
+    .info-map { width:100%; aspect-ratio:4/3; border:1px solid var(--border); overflow:hidden; }
+    .info-map iframe { width:100%; height:100%; border:none; display:block; }
+
+    /* INBOUND SECTION */
+    .inbound {
+      padding:8rem 0; background:rgba(232,224,208,0.75);
+      border-top:1px solid var(--border);
+    }
+    .inbound-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; margin-top:4rem; }
+    .inbound-card { background:var(--paper); padding:2.5rem 2rem; border:1px solid var(--border); }
+    .inbound-icon { font-size:28px; margin-bottom:1rem; }
+    .inbound-card h3 { font-size:14px; letter-spacing:.15em; color:var(--ink); margin-bottom:.6rem; font-weight:500; }
+    .inbound-card h3 small { display:block; font-family:var(--ff-en); font-size:11px; letter-spacing:.2em; color:var(--ink-soft); margin-top:.2rem; font-weight:400; }
+    .inbound-card p { font-size:13px; line-height:2.2; color:var(--ink-soft); }
+
+    /* FOOTER */
+    footer { background:var(--ink); padding:4rem 2rem; text-align:center; }
+    .footer-logo { font-size:20px; letter-spacing:.22em; color:rgba(240,235,224,0.75); margin-bottom:.8rem; }
+    .footer-sub { font-family:var(--ff-en); font-size:11px; letter-spacing:.3em; color:rgba(240,235,224,0.3); margin-bottom:1.5rem; }
+    .footer-links { display:flex; justify-content:center; gap:2rem; margin-bottom:1.5rem; list-style:none; }
+    .footer-links a { font-family:var(--ff-en); font-size:11px; letter-spacing:.18em; color:rgba(240,235,224,0.35); text-decoration:none; text-transform:uppercase; }
+    .footer-copy { font-size:11px; letter-spacing:.1em; color:rgba(240,235,224,0.2); }
+
+    /* REVEAL */
+    .reveal { opacity:0; transform:translateY(24px); transition:opacity .9s ease, transform .9s ease; }
+    .reveal.show { opacity:1; transform:translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width:768px) {
+      nav { padding:0 1rem; }
+      .nav-links, .nav-reserve { display:none; }
+      .lang-switch { margin-right:0; }
+      .about-inner { grid-template-columns:1fr; gap:3rem; }
+      .about-img-accent { display:none; }
+      .concept-grid { grid-template-columns:1fr; }
+      .concept-card { border-right:none; border-bottom:1px solid var(--border); }
+      .concept-card:last-child { border-bottom:none; }
+      .gallery-grid { grid-template-columns:1fr; }
+      .info-inner { grid-template-columns:1fr; }
+      .inbound-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body data-lang="ja">
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-inner">
+    <p class="loader-kanji">鳥飼茶房</p>
+    <p class="loader-en">Japanese Tea House · Fukuoka</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav" role="navigation" aria-label="メインナビゲーション">
+  <a href="index.html" class="nav-logo" aria-label="鳥飼茶房 トップへ">
+    <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/image/i5d6007b1d8c58fec/version/1780446887/image.png" alt="鳥飼茶房ロゴ"/>
+    鳥飼茶房
+  </a>
+  <ul class="nav-links"><li><a href="index.html" class="active">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html">Blog</a></li><li><a href="online.html">Online</a></li></ul>
+  <div class="nav-right">
+    <div class="lang-switch" role="group" aria-label="言語切り替え">
+      <button class="lang-btn active" onclick="setLang('ja')">JP</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <a href="https://airrsv.net/torikai-sabo/calender" class="nav-reserve" target="_blank" rel="noopener">
+      <span class="bi-jp">ご予約</span>
+      <span class="bi-en">Reserve</span>
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-site-name">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content" id="hero-content">
+
+    <!-- ロゴ：フェードイン -->
+    <div class="hero-logo" id="hero-logo">
+      <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/image/i5d6007b1d8c58fec/version/1780446887/image.png" alt="鳥飼茶房"/>
+    </div>
+
+    <!-- メインタイトル -->
+    <h1 class="hero-title" id="hero-title">鳥飼茶房</h1>
+
+    <!-- 英語テキスト：ロゴの後にフェードイン -->
+    <p class="hero-site-en" id="hero-site-en" aria-label="Torikai Sabo — Japanese Tea House">
+      Torikai Sabo
+    </p>
+    <p class="hero-site-sub" id="hero-site-sub">
+      Japanese Tea House · Fukuoka
+    </p>
+
+    <div class="hero-line" id="hero-line" aria-hidden="true"></div>
+    <p class="hero-copy" id="hero-copy">
+      <span class="bi-jp">お茶でも、どうぞ。</span>
+      <span class="bi-en">Please, have some tea.</span>
+    </p>
+    <p class="hero-copy-en bi-jp" id="hero-copy-en">Please, have some tea.</p>
+    <a href="https://airrsv.net/torikai-sabo/calender" class="hero-cta" id="hero-cta" target="_blank" rel="noopener">
+      <span class="bi-jp">ご予約カレンダー / Reserve</span>
+      <span class="bi-en">Make a Reservation</span>
+    </a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- TEA INTERLUDE -->
+<div class="tea-drop-section" aria-hidden="true">
+  <div class="tea-drop-text" id="dropText">
+    <span>丁寧に一煎一煎。</span>
+    <span>一杯のお茶に、ひとときの間を。</span>
+    <span style="font-family:var(--ff-en);font-style:italic;letter-spacing:.3em;font-size:.8em">One cup. One moment. One breath.</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="section-wrap">
+    <div class="about-inner">
+      <div class="about-text reveal">
+        <div class="section-header">
+          <span class="section-en">About</span>
+          <h2 class="section-title" id="about-title">
+            <span class="bi-jp">閑かな空間で<br/>一煎のお茶を</span>
+            <span class="bi-en">One Cup of Tea<br/>in a Quiet Space</span>
+          </h2>
+          <div class="section-rule"></div>
+        </div>
+        <p class="bi-jp">福岡市城南区鳥飼。閑静で穏やかな住宅街にたたずむ日本茶喫茶です。</p>
+        <p class="bi-en">Torikai Sabo is a Japanese tea house nestled in the quiet residential streets of Torikai, Jōnan-ku, Fukuoka.</p>
+        <p class="bi-jp">丁寧に一煎一煎いれたお茶と、静かな時間の流れをお届けします。綺麗な水色は、良いお茶の証明。そのひと口に、心の閑りを感じてください。</p>
+        <p class="bi-en">Each cup is brewed with care and intention — one serve at a time. The clear, beautiful color of the tea is a mark of its quality. With every sip, we invite you to find stillness.</p>
+        <p class="bi-jp">電話のない喫茶。それは、この場所を訪れるすべての方に、本当の静けさを贈るためです。</p>
+        <p class="bi-en">We have no phone — a deliberate choice, so that every guest can step into true quietude from the moment they arrive.</p>
+      </div>
+      <div class="about-visual reveal" style="transition-delay:.2s">
+        <img class="about-img-main"
+          src="https://image.jimcdn.com/app/cms/image/transf/dimension=1020x10000:format=jpg/path/s8704c2539aabb152/image/i655fcf638266929b/version/1779264667/image.jpg"
+          alt="お待ちしております — 鳥飼茶房 / Torikai Sabo, Fukuoka"/>
+        <img class="about-img-accent"
+          src="https://image.jimcdn.com/app/cms/image/transf/dimension=578x10000:format=jpg/path/s8704c2539aabb152/image/ic007e34fcaa793ff/version/1780447137/image.jpg"
+          alt="閑かで穏やかな町 鳥飼 / Torikai neighborhood, Fukuoka"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPT -->
+<section class="concept" id="concept" aria-labelledby="concept-title">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-en">Concept</span>
+      <h2 class="section-title" id="concept-title">
+        <span class="bi-jp">鳥飼茶房の<br/>三つのこだわり</span>
+        <span class="bi-en">Our Three<br/>Commitments</span>
+      </h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="concept-grid" role="list">
+      <div class="concept-card" role="listitem">
+        <p class="concept-num">01</p>
+        <p class="concept-kanji">一</p>
+        <h3><span class="bi-jp">丁寧な一煎</span><span class="bi-en">One Cup at a Time</span></h3>
+        <p>
+          <span class="bi-jp">茶葉の個性を引き出すため、一煎一煎を大切に。綺麗な水色は良いお茶の証明です。</span>
+          <span class="bi-en">Each cup is brewed individually to bring out the unique character of the tea. A clear, bright color is the mark of quality.</span>
+        </p>
+      </div>
+      <div class="concept-card" role="listitem">
+        <p class="concept-num">02</p>
+        <p class="concept-kanji">静</p>
+        <h3><span class="bi-jp">閑かな空間</span><span class="bi-en">A Space of Stillness</span></h3>
+        <p>
+          <span class="bi-jp">電話のない喫茶。心に閑りをもたらす静かな環境で、ゆったりとした時間をお届けします。</span>
+          <span class="bi-en">No phone. No rush. Just a quiet, unhurried space designed to bring calm to your heart.</span>
+        </p>
+      </div>
+      <div class="concept-card" role="listitem">
+        <p class="concept-num">03</p>
+        <p class="concept-kanji">縁</p>
+        <h3><span class="bi-jp">地域とのつながり</span><span class="bi-en">Rooted in Community</span></h3>
+        <p>
+          <span class="bi-jp">福岡・城南区鳥飼の穏やかな町に根ざし、地域の方々とともに育まれてきた茶房です。</span>
+          <span class="bi-en">We are proud to be rooted in the gentle neighborhood of Torikai, growing together with the local community.</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery" aria-labelledby="gallery-title">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-en">Gallery</span>
+      <h2 class="section-title" id="gallery-title">
+        <span class="bi-jp">風景</span>
+        <span class="bi-en">Scenes from Torikai Sabo</span>
+      </h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=564x10000:format=jpg/path/s8704c2539aabb152/image/i6412bbe7788ced38/version/1780447087/image.jpg" alt="丁寧に一煎一煎お淹れします / Brewed with care, one cup at a time"/>
+        <p class="gallery-caption"><span class="bi-jp">丁寧に一煎一煎</span><span class="bi-en">Brewed with care</span></p>
+      </div>
+      <div class="gallery-item">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=564x10000:format=jpg/path/s8704c2539aabb152/image/i39221e2194b172ae/version/1780447170/image.jpg" alt="綺麗な水色は良いお茶の証明です / Clear color, quality tea"/>
+        <p class="gallery-caption"><span class="bi-jp">綺麗な水色は良いお茶の証明</span><span class="bi-en">Clear color — quality tea</span></p>
+      </div>
+      <div class="gallery-item">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=564x10000:format=jpg/path/s8704c2539aabb152/image/id4df6b1db63555d3/version/1779264650/image.jpg" alt="心に閑りを / Find stillness within"/>
+        <p class="gallery-caption"><span class="bi-jp">心に閑りを</span><span class="bi-en">Find stillness within</span></p>
+      </div>
+      <div class="gallery-item">
+        <img src="https://image.jimcdn.com/app/cms/image/transf/dimension=578x10000:format=jpg/path/s8704c2539aabb152/image/ic007e34fcaa793ff/version/1780447137/image.jpg" alt="閑かで穏やかな町 鳥飼 / The quiet town of Torikai"/>
+        <p class="gallery-caption"><span class="bi-jp">閑かで穏やかな町「鳥飼」</span><span class="bi-en">The quiet town of Torikai</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INBOUND INFO -->
+<section class="inbound" id="visit" aria-labelledby="inbound-title">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-en">Plan Your Visit</span>
+      <h2 class="section-title" id="inbound-title">
+        <span class="bi-jp">ご来店のご案内</span>
+        <span class="bi-en">Visitor Information</span>
+      </h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="inbound-grid">
+      <div class="inbound-card reveal">
+        <div class="inbound-icon">📍</div>
+        <h3>
+          <span class="bi-jp">アクセス</span>
+          <small><span class="bi-jp">福岡市城南区鳥飼</span><span class="bi-en">Getting Here</span></small>
+        </h3>
+        <p>
+          <span class="bi-jp">福岡市城南区鳥飼4丁目7-14 鳥飼アパート103号。最寄り駅からタクシーまたは徒歩でお越しください。</span>
+          <span class="bi-en">4-7-14 Torikai, Jōnan-ku, Fukuoka. Torikai Apt. #103. Accessible by taxi or on foot from nearby stations.</span>
+        </p>
+        <a href="access.html" class="inbound-link"><span class="bi-jp">アクセス詳細</span><span class="bi-en">View Map</span></a>
+      </div>
+      <div class="inbound-card reveal" style="transition-delay:.15s">
+        <div class="inbound-icon">📅</div>
+        <h3>
+          <span class="bi-jp">営業日・予約</span>
+          <small><span class="bi-jp">Instagramでご確認を</span><span class="bi-en">Hours & Reservations</span></small>
+        </h3>
+        <p>
+          <span class="bi-jp">営業日はInstagramにてご確認ください。ご予約は予約カレンダー・Instagram DM・LINEにて承ります。</span>
+          <span class="bi-en">Please check Instagram for opening days. Reservations via the booking calendar, Instagram DM, or LINE.</span>
+        </p>
+        <a href="https://airrsv.net/torikai-sabo/calender" target="_blank" rel="noopener" class="inbound-link"><span class="bi-jp">予約カレンダー</span><span class="bi-en">Book a Table</span></a>
+      </div>
+      <div class="inbound-card reveal" style="transition-delay:.3s">
+        <div class="inbound-icon">🌐</div>
+        <h3>
+          <span class="bi-jp">言語・お問い合わせ</span>
+          <small><span class="bi-jp">English welcome</span><span class="bi-en">Language & Contact</span></small>
+        </h3>
+        <p>
+          <span class="bi-jp">英語でのお問い合わせも歓迎しております。InstagramのDMまたはLINEよりご連絡ください。</span>
+          <span class="bi-en">English inquiries are welcome. Please feel free to contact us via Instagram DM or LINE.</span>
+        </p>
+        <a href="introduction.html" class="inbound-link"><span class="bi-jp">ごあいさつを読む</span><span class="bi-en">Meet the Host</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve" id="reserve" aria-labelledby="reserve-title">
+  <h2 id="reserve-title" class="reveal">
+    <span class="bi-jp">ご予約・お問い合わせ</span>
+    <span class="bi-en">Reservations & Enquiries</span>
+  </h2>
+  <p class="reveal" style="transition-delay:.15s">
+    <span class="bi-jp">営業日はInstagramにてご確認ください。<br/>お問い合わせはInstagram DM・LINEにて承っております。<br/>閑かな空間のため、お電話でのご予約は承っておりません。</span>
+    <span class="bi-en">Please check Instagram for opening days.<br/>Contact us via Instagram DM or LINE.<br/>No phone reservations — to preserve the quiet atmosphere.</span>
+  </p>
+  <a href="https://airrsv.net/torikai-sabo/calender" class="reserve-btn reveal" style="transition-delay:.3s" target="_blank" rel="noopener">
+    <span class="bi-jp">ご予約カレンダー</span>
+    <span class="bi-en">Book a Table</span>
+  </a>
+  <div class="reserve-sns reveal" style="transition-delay:.4s">
+    <a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener">Instagram</a>
+    <a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener">LINE</a>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section class="info" id="info" aria-labelledby="info-title">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-en">Access</span>
+      <h2 class="section-title" id="info-title">
+        <span class="bi-jp">アクセス</span>
+        <span class="bi-en">Find Us</span>
+      </h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="info-inner">
+      <div class="reveal">
+        <table class="info-table">
+          <tbody>
+            <tr>
+              <th><span class="bi-jp">店名</span><span class="bi-en">Name</span></th>
+              <td>鳥飼茶房 / Torikai Sabo</td>
+            </tr>
+            <tr>
+              <th><span class="bi-jp">住所</span><span class="bi-en">Address</span></th>
+              <td>
+                <span class="bi-jp">〒814-0103<br/>福岡県福岡市城南区<br/>鳥飼4丁目7-14<br/>鳥飼アパート103号</span>
+                <span class="bi-en">Torikai Apt. #103<br/>4-7-14 Torikai<br/>Jōnan-ku, Fukuoka<br/>〒814-0103, Japan</span>
+              </td>
+            </tr>
+            <tr>
+              <th><span class="bi-jp">営業日</span><span class="bi-en">Hours</span></th>
+              <td>
+                <span class="bi-jp">Instagramにてご確認ください</span>
+                <span class="bi-en">Check Instagram for opening days</span>
+              </td>
+            </tr>
+            <tr>
+              <th><span class="bi-jp">予約</span><span class="bi-en">Reservations</span></th>
+              <td>
+                <a href="https://airrsv.net/torikai-sabo/calender" target="_blank" rel="noopener" style="color:var(--matcha);text-decoration:none;">
+                  <span class="bi-jp">予約カレンダー</span><span class="bi-en">Booking Calendar</span>
+                </a><br/>
+                <a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener" style="color:var(--matcha);text-decoration:none;">Instagram DM</a><br/>
+                <a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener" style="color:var(--matcha);text-decoration:none;">LINE</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="info-map reveal" style="transition-delay:.2s">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3324.5!2d130.3620!3d33.5680!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x354191c0b0b0b0b1%3A0x1!2z6bq76aGe5pa55Yy65Z-O5Yy65Yqg6bq744CA6bq76aGe44Ki44OR44O844OI103!5e0!3m2!1sja!2sjp!4v1"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="鳥飼茶房 地図 / Map to Torikai Sabo">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <p class="footer-logo">鳥飼茶房</p>
+  <p class="footer-sub">Japanese Tea House — Torikai, Jōnan-ku, Fukuoka</p>
+  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html">Blog</a></li><li><a href="online.html">Online</a></li></ul>
+  <p class="footer-copy">© 2025 鳥飼茶房 All rights reserved.</p>
+</footer>
+
+<script>
+/* ── LOADER & HERO SEQUENCE ── */
+window.addEventListener('load', () => {
+  const loader   = document.getElementById('loader');
+  const heroBg   = document.getElementById('hero-bg');
+
+  // ヒーロー各要素
+  const logo     = document.getElementById('hero-logo');
+  const title    = document.getElementById('hero-title');
+  const siteEn   = document.getElementById('hero-site-en');
+  const siteSub  = document.getElementById('hero-site-sub');
+  const line     = document.getElementById('hero-line');
+  const copy     = document.getElementById('hero-copy');
+  const copyEn   = document.getElementById('hero-copy-en');
+  const cta      = document.getElementById('hero-cta');
+
+  // ローダーを少し長めに見せてから閉じる
+  setTimeout(() => {
+    loader.classList.add('hide');
+    heroBg.classList.add('loaded');
+  }, 1600);
+
+  // ヒーロー要素を順番に出現
+  const t = 2000;
+  setTimeout(() => logo.classList.add('show'),    t);        // ロゴ
+  setTimeout(() => title.classList.add('show'),   t + 500);  // 鳥飼茶房
+  setTimeout(() => siteEn.classList.add('show'),  t + 1000); // 英語タイトル
+  setTimeout(() => siteSub.classList.add('show'), t + 1400); // サブテキスト
+  setTimeout(() => line.classList.add('show'),    t + 1900); // 区切り線
+  setTimeout(() => copy.classList.add('show'),    t + 2300); // コピー日本語
+  setTimeout(() => copyEn.classList.add('show'),  t + 2700); // コピー英語
+  setTimeout(() => cta.classList.add('show'),     t + 3300); // CTAボタン
+});
+
+/* ── NAV SCROLL ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── SCROLL REVEAL ── */
+const revealEls = document.querySelectorAll('.reveal, .concept-card, .gallery-item');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('show'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => observer.observe(el));
+
+/* ── DROP TEXT REVEAL ── */
+const dropSpans = document.querySelectorAll('#dropText span');
+const dropObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      dropSpans.forEach((s, i) => {
+        setTimeout(() => s.classList.add('show'), i * 400);
+      });
+      dropObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+const dropSection = document.querySelector('.tea-drop-section');
+if (dropSection) dropObserver.observe(dropSection);
+
+/* ── LANG SWITCH ── */
+function setLang(lang) {
+  document.body.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase() === lang);
+  });
+}
+</script>
+
+</body>
+</html>
