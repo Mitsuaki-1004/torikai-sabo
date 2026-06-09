@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TAKE OUT - 鳥飼茶房 | Takeaway Tea</title>
+  <meta name="description" content="鳥飼茶房のテイクアウトメニュー。香り高い焙じ茶と日替わり煎茶を一杯ずつ急須でお淹れします。"/>
+  <meta property="og:title" content="TAKE OUT — 鳥飼茶房"/>
+  <meta property="og:description" content="Aromatic houjicha and daily sencha, brewed one cup at a time for takeaway."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="https://image.jimcdn.com/app/cms/image/transf/dimension=498x10000:format=jpg/path/s8704c2539aabb152/image/ie3ec435dcf00028d/version/1777944390/image.jpg"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+JP:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    :root{--ink:#1c1810;--ink-mid:#4a4030;--ink-soft:#7a6e60;--ink-faint:#b0a598;--paper:#f8f4ee;--paper-warm:#f0ebe0;--matcha:#3d5c36;--gold:#a07840;--gold-pale:#d4b87a;--border:rgba(90,70,40,0.15);--ff-jp:'Shippori Mincho','Noto Serif JP',serif;--ff-en:'EB Garamond',Georgia,serif}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:var(--ff-jp);color:var(--ink);line-height:1.9;overflow-x:hidden;background-color:var(--paper);background-image:url('https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/backgroundarea/ie71bfcebb276bd1c/version/1775546818/image.png');background-size:cover;background-position:center;background-attachment:fixed;background-repeat:no-repeat}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(248,244,238,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:all .4s}
+    nav.scrolled{height:54px;background:rgba(248,244,238,0.97);box-shadow:0 1px 20px rgba(0,0,0,0.06)}
+    .nav-logo{font-family:var(--ff-jp);font-size:17px;font-weight:500;letter-spacing:.2em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}
+    .nav-logo img{height:30px;width:auto;opacity:.9}
+    .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+    .nav-links a{font-size:12px;letter-spacing:.18em;color:var(--ink-soft);text-decoration:none;transition:color .2s;font-family:var(--ff-en);text-transform:uppercase}
+    .nav-links a:hover,.nav-links a.active{color:var(--matcha)}
+    .nav-right{display:flex;align-items:center}
+    .lang-switch{display:flex;gap:0;margin-right:1.2rem}
+    .lang-btn{font-family:var(--ff-en);font-size:11px;letter-spacing:.15em;padding:5px 11px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+    .lang-btn:first-child{border-right:none}
+    .lang-btn.active{background:var(--matcha);color:white;border-color:var(--matcha)}
+    .nav-reserve{font-size:11px;letter-spacing:.18em;padding:8px 20px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-family:var(--ff-jp);transition:all .25s}
+    .nav-reserve:hover{background:var(--gold);color:white}
+    .bi-en{font-family:var(--ff-en);font-size:.78em;letter-spacing:.18em;color:var(--ink-soft);font-style:italic}
+    [data-lang="en"] .bi-jp{display:none}
+    [data-lang="en"] .bi-en{font-style:normal;font-size:1em;color:inherit}
+    [data-lang="ja"] .bi-en{display:none}
+    .page-hero{padding:10rem 2rem 5rem;text-align:center;background:rgba(28,24,16,0.50)}
+    .page-hero-parent{font-family:var(--ff-en);font-size:11px;letter-spacing:.3em;color:rgba(240,235,224,0.45);margin-bottom:1rem}
+    .page-hero-parent a{color:rgba(240,235,224,0.45);text-decoration:none}
+    .page-hero-label{font-family:var(--ff-en);font-size:11px;letter-spacing:.5em;color:var(--gold-pale);text-transform:uppercase;margin-bottom:.5rem}
+    .page-hero h1{font-size:clamp(28px,5vw,44px);font-weight:400;letter-spacing:.25em;color:rgba(240,235,224,0.92);margin-bottom:1.5rem}
+    .page-hero-line{width:1px;height:40px;background:var(--gold-pale);margin:0 auto 1.5rem;opacity:.6}
+    .sub-nav{display:flex;justify-content:center;gap:1.5rem;padding:1.5rem 2rem;background:rgba(248,244,238,0.85);border-bottom:1px solid var(--border)}
+    .sub-nav a{font-size:12px;letter-spacing:.2em;color:var(--ink-soft);text-decoration:none;padding:6px 18px;border:1px solid transparent;transition:all .2s}
+    .sub-nav a:hover{border-color:var(--border)}
+    .sub-nav a.active{color:var(--matcha);border-color:var(--matcha)}
+    .section-wrap{max-width:900px;margin:0 auto;padding:0 2rem}
+    .section-en{font-family:var(--ff-en);font-size:11px;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:.6rem;display:block}
+    .section-rule{width:30px;height:1px;background:var(--gold);margin-top:1.2rem;margin-bottom:3rem}
+    .takeout-hero-img{padding:5rem 0 3rem;background:rgba(248,244,238,0.78);text-align:center}
+    .takeout-hero-img img{max-width:320px;width:100%;aspect-ratio:3/4;object-fit:cover;display:block;margin:0 auto}
+    .takeout-menu{padding:5rem 0 7rem;background:rgba(240,235,224,0.75)}
+    .takeout-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:3rem;margin-top:3rem}
+    .takeout-item{text-align:center;opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+    .takeout-item.show{opacity:1;transform:translateY(0)}
+    .takeout-item:nth-child(2){transition-delay:.12s}
+    .takeout-item-name{font-size:clamp(18px,2.5vw,24px);font-weight:500;letter-spacing:.18em;color:var(--ink);margin-bottom:1.2rem}
+    .takeout-item-desc{font-size:14px;line-height:2.6;color:var(--ink-soft);font-style:italic}
+    .reserve{padding:6rem 0;background:var(--matcha);text-align:center}
+    .reserve h2{font-size:clamp(20px,3.5vw,28px);font-weight:400;letter-spacing:.25em;color:rgba(255,255,255,0.92);margin-bottom:1.5rem}
+    .reserve p{font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,0.6);line-height:2.4;margin-bottom:2.5rem}
+    .reserve-btn{display:inline-block;padding:14px 48px;background:rgba(255,255,255,0.92);color:var(--matcha);font-family:var(--ff-jp);font-size:13px;letter-spacing:.22em;text-decoration:none;transition:all .25s}
+    .reserve-btn:hover{background:white}
+    .reserve-sns{display:flex;justify-content:center;gap:1.2rem;margin-top:2rem}
+    .reserve-sns a{font-size:12px;letter-spacing:.18em;padding:9px 24px;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);text-decoration:none;transition:all .2s}
+    .reserve-sns a:hover{border-color:rgba(255,255,255,0.7);color:white}
+    footer{background:var(--ink);padding:4rem 2rem;text-align:center}
+    .footer-logo{font-size:20px;letter-spacing:.22em;color:rgba(240,235,224,0.75);margin-bottom:.8rem}
+    .footer-sub{font-family:var(--ff-en);font-size:11px;letter-spacing:.3em;color:rgba(240,235,224,0.3);margin-bottom:1.5rem}
+    .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;list-style:none}
+    .footer-links a{font-family:var(--ff-en);font-size:11px;letter-spacing:.18em;color:rgba(240,235,224,0.35);text-decoration:none;text-transform:uppercase}
+    .footer-copy{font-size:11px;letter-spacing:.1em;color:rgba(240,235,224,0.2)}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    /* Dropdown */
+    @media(max-width:768px){nav{padding:0 1rem}.nav-links,.nav-reserve{display:none}.lang-switch{margin-right:0}.page-hero{padding:8rem 1.5rem 4rem}.takeout-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}.sub-nav{gap:.8rem;flex-wrap:wrap}}
+  </style>
+</head>
+<body data-lang="ja">
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><img src="https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/image/i5d6007b1d8c58fec/version/1780446887/image.png" alt="鳥飼茶房ロゴ"/> 鳥飼茶房</a>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html" class="active">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html">Blog</a></li><li><a href="online.html">Online</a></li></ul>
+  <div class="nav-right">
+    <div class="lang-switch"><button class="lang-btn active" onclick="setLang('ja')">JP</button><button class="lang-btn" onclick="setLang('en')">EN</button></div>
+    <a href="https://airrsv.net/torikai-sabo/calender" class="nav-reserve" target="_blank" rel="noopener"><span class="bi-jp">ご予約</span><span class="bi-en">Reserve</span></a>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="page-hero-parent"><a href="products.html">Products</a> ／</p>
+  <p class="page-hero-label">Take Out</p>
+  <h1><span class="bi-jp">テイクアウト</span><span class="bi-en">Takeaway</span></h1>
+  <div class="page-hero-line"></div>
+</section>
+
+<div class="sub-nav">
+  <a href="eat-in.html">EAT IN</a>
+  <a href="food.html">FOOD</a>
+  <a href="take-out.html" class="active">TAKE OUT</a>
+</div>
+
+<section class="takeout-hero-img">
+  <div class="section-wrap">
+    <img class="reveal" src="https://image.jimcdn.com/app/cms/image/transf/dimension=498x10000:format=jpg/path/s8704c2539aabb152/image/ie3ec435dcf00028d/version/1777944390/image.jpg" alt="鳥飼茶房のテイクアウト焙じ茶 / Takeaway houjicha"/>
+  </div>
+</section>
+
+<section class="takeout-menu" aria-labelledby="takeout-title">
+  <div class="section-wrap">
+    <div class="reveal">
+      <span class="section-en">Takeaway Menu</span>
+      <h2 id="takeout-title" style="font-size:clamp(22px,3.5vw,30px);font-weight:400;letter-spacing:.2em;color:var(--ink);">
+        <span class="bi-jp">テイクアウトメニュー</span><span class="bi-en">Takeaway Selection</span>
+      </h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="takeout-grid">
+      <article class="takeout-item">
+        <h3 class="takeout-item-name"><span class="bi-jp">焙じ茶</span><span class="bi-en">Houjicha</span></h3>
+        <p class="takeout-item-desc">
+          <span class="bi-jp">香り高くさっぱりとした焙じ茶です。<br/>心を落ち着かせたいときにどうぞ。</span>
+          <span class="bi-en">Fragrant and refreshing roasted tea.<br/>Perfect for calming the mind.</span>
+        </p>
+      </article>
+      <article class="takeout-item">
+        <h3 class="takeout-item-name"><span class="bi-jp">日替わり煎茶</span><span class="bi-en">Daily Sencha</span></h3>
+        <p class="takeout-item-desc">
+          <span class="bi-jp">その日その日に合わせた煎茶をお淹れします。<br/>朝の目覚めに最適です。</span>
+          <span class="bi-en">A carefully chosen sencha brewed fresh each day.<br/>The perfect start to your morning.</span>
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="reserve">
+  <h2 class="reveal"><span class="bi-jp">ご予約・お問い合わせ</span><span class="bi-en">Reservations & Enquiries</span></h2>
+  <p class="reveal" style="transition-delay:.15s"><span class="bi-jp">営業日はInstagramにてご確認ください。<br/>お問い合わせはInstagram DM・LINEにて承っております。</span><span class="bi-en">Please check Instagram for opening days.<br/>Contact us via Instagram DM or LINE.</span></p>
+  <a href="https://airrsv.net/torikai-sabo/calender" class="reserve-btn reveal" style="transition-delay:.3s" target="_blank" rel="noopener"><span class="bi-jp">ご予約カレンダー</span><span class="bi-en">Book a Table</span></a>
+  <div class="reserve-sns reveal" style="transition-delay:.4s"><a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener">Instagram</a><a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener">LINE</a></div>
+</section>
+
+<footer>
+  <p class="footer-logo">鳥飼茶房</p>
+  <p class="footer-sub">Japanese Tea House — Torikai, Jōnan-ku, Fukuoka</p>
+  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html">Blog</a></li><li><a href="online.html">Online</a></li></ul>
+  <p class="footer-copy">© 2025 鳥飼茶房 All rights reserved.</p>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});
+const revealEls=document.querySelectorAll('.reveal,.takeout-item');const observer=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}})},{threshold:.12});revealEls.forEach(el=>observer.observe(el));
+function setLang(l){document.body.setAttribute('data-lang',l);document.querySelectorAll('.lang-btn').forEach(b=>{b.classList.toggle('active',b.textContent.toLowerCase()===l)})}
+</script>
+</body>
+</html>
