@@ -11,11 +11,11 @@
   <meta property="og:description"
     content="A serene Japanese tea house in Torikai, Fukuoka. Handcrafted single-serve tea in a quiet, unhurried space." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://torikai-sabo.jimdofree.com/" />
+  <meta property="og:url" content="https://www.torikai-sabo.com/" />
   <meta property="og:image"
     content="https://image.jimcdn.com/app/cms/image/transf/dimension=1920x10000:format=jpg/path/s8704c2539aabb152/image/id4df6b1db63555d3/version/1779264650/image.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://torikai-sabo.jimdofree.com/" />
+  <link rel="canonical" href="https://www.torikai-sabo.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -586,7 +586,7 @@
     /* ABOUT */
     .about {
       padding: 9rem 0;
-      background: rgba(248, 244, 238, 0.78);
+      background: rgba(28,24,16,0.55);
     }
 
     .about-inner {
@@ -625,82 +625,11 @@
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
     }
 
-    /* CONCEPT */
-    .concept {
-      padding: 9rem 0;
-      background: rgba(240, 235, 224, 0.75);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .concept-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-    }
-
-    .concept-card {
-      padding: 3rem 2.2rem;
-      border-right: 1px solid var(--border);
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity .7s ease, transform .7s ease;
-    }
-
-    .concept-card:last-child {
-      border-right: none;
-    }
-
-    .concept-card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .concept-card:nth-child(2) {
-      transition-delay: .15s;
-    }
-
-    .concept-card:nth-child(3) {
-      transition-delay: .3s;
-    }
-
-    .concept-num {
-      font-family: var(--ff-en);
-      font-size: 11px;
-      letter-spacing: .3em;
-      color: var(--ink-faint);
-      margin-bottom: 1.8rem;
-    }
-
-    .concept-kanji {
-      font-size: 42px;
-      font-weight: 400;
-      color: var(--matcha);
-      letter-spacing: .05em;
-      margin-bottom: 1rem;
-      line-height: 1;
-    }
-
-    .concept-card h3 {
-      font-size: 16px;
-      font-weight: 500;
-      letter-spacing: .15em;
-      color: var(--ink);
-      margin-bottom: .8rem;
-    }
-
-    .concept-card p {
-      font-size: 13px;
-      line-height: 2.3;
-      color: var(--ink-soft);
-    }
 
     /* GALLERY */
     .gallery {
       padding: 9rem 0;
-      background: rgba(248, 244, 238, 0.78);
+      background: rgba(28,24,16,0.55);
     }
 
     .gallery-grid {
@@ -764,7 +693,7 @@
     /* RESERVE */
     .reserve {
       padding: 8rem 0;
-      background: var(--matcha);
+      background:#7a6242;
       text-align: center;
     }
 
@@ -787,8 +716,9 @@
     .reserve-btn {
       display: inline-block;
       padding: 15px 52px;
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--matcha);
+      background:transparent;
+      color:rgba(255,255,255,0.92);
+      border:1px solid rgba(255,255,255,0.6);
       font-family: var(--ff-jp);
       font-size: 13px;
       letter-spacing: .22em;
@@ -797,7 +727,8 @@
     }
 
     .reserve-btn:hover {
-      background: white;
+      background: rgba(255,255,255,0.92);
+      color: #7a6242;
     }
 
     .reserve-sns {
@@ -825,7 +756,7 @@
     /* INFO */
     .info {
       padding: 9rem 0;
-      background: rgba(240, 235, 224, 0.75);
+      background: rgba(28,24,16,0.55);
     }
 
     .info-inner {
@@ -841,17 +772,17 @@
     }
 
     .info-table tr {
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(212,184,122,0.25);
     }
 
     .info-table tr:first-child {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(212,184,122,0.25);
     }
 
     .info-table th {
       font-size: 11px;
       letter-spacing: .25em;
-      color: var(--ink-soft);
+      color: var(--gold-pale);
       font-weight: 400;
       padding: 1.2rem 0;
       text-align: left;
@@ -863,7 +794,7 @@
     .info-table td {
       font-size: 14px;
       letter-spacing: .08em;
-      color: var(--ink);
+      color: rgba(240,235,224,0.9);
       padding: 1.2rem 0 1.2rem 1rem;
       line-height: 2;
     }
@@ -885,7 +816,7 @@
     /* INBOUND SECTION */
     .inbound {
       padding: 8rem 0;
-      background: rgba(232, 224, 208, 0.75);
+      background: rgba(28,24,16,0.55);
       border-top: 1px solid var(--border);
     }
 
@@ -1035,18 +966,6 @@
         display: none;
       }
 
-      .concept-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .concept-card {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .concept-card:last-child {
-        border-bottom: none;
-      }
 
       .gallery-grid {
         grid-template-columns: 1fr;
@@ -1060,6 +979,16 @@
         grid-template-columns: 1fr;
       }
     }
+    /* DARK SECTION TEXT OVERRIDES (about/gallery/inbound/info) */
+    .about .section-title,
+    .gallery .section-title,
+    .inbound .section-title,
+    .info .section-title { color: var(--paper); }
+    .about .about-text p { color: rgba(240,235,224,0.85); }
+    .about .section-rule,
+    .gallery .section-rule,
+    .inbound .section-rule,
+    .info .section-rule { background: var(--gold-pale); }
   </style>
 </head>
 
@@ -1210,51 +1139,6 @@
     </div>
   </section>
 
-  <!-- CONCEPT -->
-  <section class="concept" id="concept" aria-labelledby="concept-title">
-    <div class="section-wrap">
-      <div class="section-header reveal">
-        <span class="section-en">Concept</span>
-        <h2 class="section-title" id="concept-title">
-          <span class="bi-jp">鳥飼茶房の<br />三つのこだわり</span>
-          <span class="bi-en">Our Three<br />Commitments</span>
-        </h2>
-        <div class="section-rule"></div>
-      </div>
-      <div class="concept-grid" role="list">
-        <div class="concept-card" role="listitem">
-          <p class="concept-num">01</p>
-          <p class="concept-kanji">一</p>
-          <h3><span class="bi-jp">丁寧な一煎</span><span class="bi-en">One Cup at a Time</span></h3>
-          <p>
-            <span class="bi-jp">茶葉の個性を引き出すため、一煎一煎を大切に。綺麗な水色は良いお茶の証明です。</span>
-            <span class="bi-en">Each cup is brewed individually to bring out the unique character of the tea. A clear,
-              bright color is the mark of quality.</span>
-          </p>
-        </div>
-        <div class="concept-card" role="listitem">
-          <p class="concept-num">02</p>
-          <p class="concept-kanji">静</p>
-          <h3><span class="bi-jp">閑かな空間</span><span class="bi-en">A Space of Stillness</span></h3>
-          <p>
-            <span class="bi-jp">電話のない喫茶。心に閑りをもたらす静かな環境で、ゆったりとした時間をお届けします。</span>
-            <span class="bi-en">No phone. No rush. Just a quiet, unhurried space designed to bring calm to your
-              heart.</span>
-          </p>
-        </div>
-        <div class="concept-card" role="listitem">
-          <p class="concept-num">03</p>
-          <p class="concept-kanji">縁</p>
-          <h3><span class="bi-jp">地域とのつながり</span><span class="bi-en">Rooted in Community</span></h3>
-          <p>
-            <span class="bi-jp">福岡・城南区鳥飼の穏やかな町に根ざし、地域の方々とともに育まれてきた茶房です。</span>
-            <span class="bi-en">We are proud to be rooted in the gentle neighborhood of Torikai, growing together with
-              the local community.</span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- GALLERY -->
   <section class="gallery" id="gallery" aria-labelledby="gallery-title">
@@ -1332,9 +1216,9 @@
             <small><span class="bi-jp">Instagramでご確認を</span><span class="bi-en">Hours & Reservations</span></small>
           </h3>
           <p>
-            <span class="bi-jp">営業日はInstagramにてご確認ください。ご予約は予約カレンダー・Instagram DM・LINEにて承ります。</span>
-            <span class="bi-en">Please check Instagram for opening days. Reservations via the booking calendar,
-              Instagram DM, or LINE.</span>
+            <span class="bi-jp">営業日はInstagramにてご確認ください。ご予約は予約カレンダー・Instagram DMにて承ります。</span>
+            <span class="bi-en">Please check Instagram for opening days. Reservations via the booking calendar
+              or Instagram DM.</span>
           </p>
           <a href="https://airrsv.net/torikai-sabo/calendar" target="_blank" rel="noopener" class="inbound-link"><span
               class="bi-jp">予約カレンダー</span><span class="bi-en">Book a Table</span></a>
@@ -1346,9 +1230,8 @@
             <small><span class="bi-jp">English welcome</span><span class="bi-en">Language & Contact</span></small>
           </h3>
           <p>
-            <span class="bi-jp">英語でのお問い合わせも歓迎しております。InstagramのDMまたはLINEよりご連絡ください。</span>
-            <span class="bi-en">English inquiries are welcome. Please feel free to contact us via Instagram DM or
-              LINE.</span>
+            <span class="bi-jp">英語でのお問い合わせも歓迎しております。InstagramのDMよりご連絡ください。</span>
+            <span class="bi-en">English inquiries are welcome. Please feel free to contact us via Instagram DM.</span>
           </p>
           <a href="introduction.html" class="inbound-link"><span class="bi-jp">ごあいさつを読む</span><span class="bi-en">Meet
               the Host</span></a>
@@ -1366,7 +1249,7 @@
     <p class="reveal" style="transition-delay:.15s">
       <span class="bi-jp">営業日はInstagramにてご確認ください。<br />お問い合わせはInstagram
         DMにて承っております。<br />閑かな空間のため、お電話でのご予約は承っておりません。</span>
-      <span class="bi-en">Please check Instagram for opening days.<br />Contact us via Instagram DM or LINE.<br />No
+      <span class="bi-en">Please check Instagram for opening days.<br />Contact us via Instagram DM.<br />No
         phone reservations — to preserve the quiet atmosphere.</span>
     </p>
     <a href="https://airrsv.net/torikai-sabo/calendar" class="reserve-btn reveal" style="transition-delay:.3s"
@@ -1376,7 +1259,7 @@
     </a>
     <div class="reserve-sns reveal" style="transition-delay:.4s">
       <a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener">LINE</a>
+      
     </div>
   </section>
 
@@ -1420,7 +1303,7 @@
                   <span class="bi-jp">予約カレンダー</span><span class="bi-en">Booking Calendar</span>
                 </a><br/>
                 <a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener" style="color:var(--matcha);text-decoration:none;">Instagram DM</a><br/>
-                <a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener" style="color:var(--matcha);text-decoration:none;">LINE</a>
+                
               </td>
             </tr>
           </tbody>
@@ -1518,7 +1401,7 @@
     window.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
     /* ── SCROLL REVEAL ── */
-    const revealEls = document.querySelectorAll('.reveal, .concept-card, .gallery-item');
+    const revealEls = document.querySelectorAll('.reveal, .gallery-item');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('show'); observer.unobserve(e.target); }
