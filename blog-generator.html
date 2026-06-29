@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>記事メーカー — 鳥飼茶房</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+JP:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --ink:#1c1810;--ink-mid:#4a4030;--ink-soft:#7a6e60;--ink-faint:#b0a598;
+    --paper:#f8f4ee;--paper-warm:#f0ebe0;--paper-deep:#e8e0d0;
+    --matcha:#3d5c36;--matcha-mid:#5a7a52;
+    --gold:#a07840;--gold-pale:#d4b87a;
+    --border:rgba(90,70,40,0.18);
+    --ff-jp:'Shippori Mincho','Noto Serif JP',serif;
+    --ff-en:'EB Garamond',Georgia,serif;
+  }
+  html{font-size:16px}
+  body{font-family:var(--ff-jp);color:var(--ink);background:var(--paper);line-height:1.8;min-height:100vh}
+
+  /* ---- header ---- */
+  .tool-head{padding:1.6rem 2rem;border-bottom:1px solid var(--border);background:rgba(248,244,238,0.96);display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap}
+  .tool-head .mark{font-size:18px;font-weight:600;letter-spacing:.2em;color:var(--ink)}
+  .tool-head .en{font-family:var(--ff-en);font-size:12px;letter-spacing:.34em;color:var(--gold);text-transform:uppercase}
+  .tool-head .hint{margin-left:auto;font-size:12px;letter-spacing:.06em;color:var(--ink-soft)}
+
+  /* ---- layout ---- */
+  .layout{display:grid;grid-template-columns:minmax(340px,440px) 1fr;min-height:calc(100vh - 65px)}
+  .form-pane{padding:2rem;border-right:1px solid var(--border);overflow-y:auto;background:var(--paper)}
+  .preview-pane{background:var(--paper-deep);display:flex;flex-direction:column}
+
+  /* ---- form ---- */
+  .field{margin-bottom:1.5rem}
+  .field label{display:block;font-size:12px;letter-spacing:.14em;color:var(--ink-mid);margin-bottom:.5rem}
+  .field label .opt{color:var(--ink-faint);font-size:11px;letter-spacing:.08em;margin-left:.4em}
+  .field input[type=text],.field input[type=date],.field textarea{
+    width:100%;font-family:var(--ff-jp);font-size:15px;color:var(--ink);
+    background:#fff;border:1px solid var(--border);padding:.7rem .8rem;line-height:1.7;
+    transition:border-color .2s
+  }
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--matcha)}
+  .field textarea{resize:vertical;min-height:220px;line-height:2}
+  .field .note{font-size:11px;color:var(--ink-soft);margin-top:.4rem;line-height:1.7}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+  .filename-box{background:var(--paper-warm);border:1px solid var(--border);padding:.7rem .8rem;font-family:var(--ff-en);font-size:14px;color:var(--ink-mid);letter-spacing:.04em;word-break:break-all}
+
+  .actions{position:sticky;bottom:0;background:linear-gradient(to top,var(--paper) 70%,transparent);padding-top:1.2rem;margin-top:.5rem;display:flex;gap:.7rem;flex-wrap:wrap}
+  .btn{font-family:var(--ff-jp);font-size:13px;letter-spacing:.14em;padding:.85rem 1.4rem;border:1px solid var(--matcha);background:var(--matcha);color:#fff;cursor:pointer;transition:all .2s;flex:1;min-width:130px}
+  .btn:hover{background:#34502e;border-color:#34502e}
+  .btn.ghost{background:transparent;color:var(--matcha)}
+  .btn.ghost:hover{background:var(--matcha);color:#fff}
+  .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);font-size:13px;letter-spacing:.1em;padding:.8rem 1.6rem;border-radius:2px;opacity:0;pointer-events:none;transition:all .35s;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  /* ---- 画像添付 ---- */
+  .img-drop{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap}
+  .img-pick{font-family:var(--ff-jp);font-size:13px;letter-spacing:.1em;padding:.6rem 1.1rem;border:1px solid var(--matcha);background:#fff;color:var(--matcha);cursor:pointer;transition:all .2s}
+  .img-pick:hover{background:var(--matcha);color:#fff}
+  .img-hint{font-size:11px;color:var(--ink-soft)}
+  .img-preview{margin-top:.8rem;border:1px solid var(--border);background:#fff;padding:.6rem;display:flex;gap:.9rem;align-items:center}
+  .img-preview img{width:84px;height:84px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+  .img-meta{display:flex;flex-direction:column;gap:.45rem;font-size:12px;color:var(--ink-soft);line-height:1.5}
+  .img-remove{align-self:flex-start;font-family:var(--ff-jp);font-size:12px;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;text-decoration:underline}
+  .img-url-toggle{margin-top:.7rem;font-size:12px;color:var(--ink-soft)}
+  .img-url-toggle summary{cursor:pointer;letter-spacing:.06em;padding:.2rem 0}
+  .img-url-toggle input{margin-top:.5rem}
+
+  /* ---- 未反映状態 ---- */
+  .preview-bar .dot.dirty{background:#b5562f}
+  #btn-render.pulse{animation:pulse 1.5s ease infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(61,92,54,.4)}50%{box-shadow:0 0 0 6px rgba(61,92,54,0)}}
+
+  /* ---- ブロックエディタ ---- */
+  #blocks{display:flex;flex-direction:column;gap:.7rem}
+  .block{border:1px solid var(--border);background:#fff}
+  .block-head{display:flex;align-items:center;gap:.45rem;padding:.45rem .6rem;background:var(--paper-warm);border-bottom:1px solid var(--border)}
+  .block-kind{font-size:11px;letter-spacing:.18em;color:var(--ink-mid);flex:1}
+  .block-head button{font-family:var(--ff-jp);font-size:13px;line-height:1;width:28px;height:26px;border:1px solid var(--border);background:#fff;color:var(--ink-soft);cursor:pointer;transition:all .15s}
+  .block-head button:hover:not(:disabled){border-color:var(--matcha);color:var(--matcha)}
+  .block-head button:disabled{opacity:.28;cursor:default}
+  .block-head .del:hover{border-color:#b5562f;color:#b5562f}
+  .block-body{padding:.7rem}
+  .block-body textarea{width:100%;font-family:var(--ff-jp);font-size:15px;color:var(--ink);background:#fff;border:1px solid var(--border);padding:.6rem .7rem;line-height:2;resize:vertical;min-height:104px}
+  .block-body textarea:focus{outline:none;border-color:var(--matcha)}
+  .block-img-pick{font-family:var(--ff-jp);font-size:13px;letter-spacing:.08em;padding:.55rem 1.1rem;border:1px solid var(--matcha);background:#fff;color:var(--matcha);cursor:pointer;transition:all .2s}
+  .block-img-pick:hover{background:var(--matcha);color:#fff}
+  .block-img-preview{display:flex;gap:.9rem;align-items:center}
+  .block-img-preview img{width:90px;height:90px;object-fit:cover;border:1px solid var(--border);flex-shrink:0}
+  .block-img-meta{font-size:12px;color:var(--ink-soft);display:flex;flex-direction:column;gap:.45rem}
+  .block-img-change{font-size:12px;color:var(--gold);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;text-align:left;font-family:var(--ff-jp)}
+  .block-url{margin-top:.6rem;font-size:12px}
+  .block-url summary{cursor:pointer;color:var(--ink-soft)}
+  .block-url input{width:100%;margin-top:.4rem;font-family:var(--ff-jp);font-size:14px;border:1px solid var(--border);padding:.5rem .6rem}
+  .block-url input:focus{outline:none;border-color:var(--matcha)}
+  .block-add{display:flex;gap:.7rem;margin-top:.8rem}
+  .add-btn{flex:1;font-family:var(--ff-jp);font-size:13px;letter-spacing:.06em;padding:.75rem;border:1px dashed var(--matcha);background:transparent;color:var(--matcha);cursor:pointer;transition:all .2s}
+  .add-btn:hover{background:rgba(61,92,54,.07)}
+  .block-empty{font-size:12px;color:var(--ink-faint);padding:1rem;text-align:center;border:1px dashed var(--border)}
+
+  /* ---- 追従する更新ボタン（未反映時のみフェード表示）---- */
+  .float-render{position:fixed;left:1.6rem;bottom:1.6rem;z-index:60;font-family:var(--ff-jp);font-size:13px;letter-spacing:.12em;padding:.9rem 1.6rem;border:none;border-radius:40px;background:var(--matcha);color:#fff;cursor:pointer;box-shadow:0 6px 22px rgba(28,24,16,.28);display:flex;align-items:center;gap:.5rem;opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .32s ease,transform .32s ease,visibility .32s}
+  .float-render.show{opacity:1;visibility:visible;transform:translateY(0)}
+  .float-render:hover{background:#34502e}
+  .float-render .ico{font-size:15px;line-height:1}
+  @media(max-width:900px){.float-render{left:1rem;bottom:1rem}}
+
+  /* ---- preview ---- */
+  .preview-bar{padding:.9rem 1.4rem;font-size:11px;letter-spacing:.2em;color:var(--ink-soft);text-transform:uppercase;font-family:var(--ff-en);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem;background:rgba(248,244,238,0.7)}
+  .preview-bar .dot{width:7px;height:7px;border-radius:50%;background:var(--matcha-mid)}
+  .preview-frame{flex:1;width:100%;border:none;background:#fff}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr}
+    .form-pane{border-right:none;border-bottom:1px solid var(--border)}
+    .preview-pane{min-height:80vh}
+    .tool-head .hint{margin-left:0;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="tool-head">
+  <span class="mark">鳥飼茶房</span>
+  <span class="en">Blog Article Maker</span>
+  <span class="hint">入力すると右側に記事ページがそのまま組み上がります。HTMLの知識は要りません。</span>
+</div>
+
+<div class="layout">
+  <!-- ===== 入力フォーム ===== -->
+  <section class="form-pane">
+
+    <div class="field">
+      <label for="f-date">公開日</label>
+      <input type="date" id="f-date"/>
+      <p class="note">記事の上に「May 7, 2026」、署名に「2026年 5月 7日」として自動で入ります。</p>
+    </div>
+
+    <div class="field">
+      <label for="f-title-jp">タイトル（日本語）</label>
+      <input type="text" id="f-title-jp" placeholder="例：OPENのごあいさつ"/>
+    </div>
+
+    <div class="field">
+      <label for="f-title-en">タイトル（英語）<span class="opt">― 任意</span></label>
+      <input type="text" id="f-title-en" placeholder="例：Opening Greeting"/>
+      <p class="note">EN表示に切り替えたとき用。空ならEN時も日本語タイトルを出します。</p>
+    </div>
+
+    <div class="field">
+      <label>本文 ― 文章と写真を自由に並べられます</label>
+      <div id="blocks"></div>
+      <div class="block-add">
+        <button type="button" class="add-btn" id="add-text">＋ 文章を追加</button>
+        <button type="button" class="add-btn" id="add-image">＋ 写真を追加</button>
+      </div>
+      <p class="note">各ブロックは ↑↓ で並べ替え、× で削除。文章は改行で段落・空行で余白、<strong>**強調**</strong>で太字、行頭 ## で小見出し。写真は選ぶと自動で圧縮して埋め込みます。</p>
+      <div id="img-total" class="note"></div>
+    </div>
+
+    <div class="field">
+      <label>保存するファイル名</label>
+      <div class="filename-box" id="f-filename">post-YYYY-MM-DD.html</div>
+      <p class="note">この名前でダウンロードされます。GitHubにこのファイルをアップすれば公開できます。</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btn-render">プレビューを更新</button>
+      <button class="btn ghost" id="btn-download">ダウンロード</button>
+      <button class="btn ghost" id="btn-copy">コピー</button>
+      <button class="btn ghost" id="btn-archive">アーカイブカードHTMLをコピー</button>
+    </div>
+  </section>
+
+  <!-- ===== プレビュー ===== -->
+  <section class="preview-pane">
+    <div class="preview-bar"><span class="dot" id="pv-dot"></span> <span id="pv-status">プレビューは最新です</span></div>
+    <iframe class="preview-frame" id="preview" sandbox="allow-scripts" title="記事プレビュー"></iframe>
+  </section>
+</div>
+
+<div class="toast" id="toast"></div>
+<button id="float-render" class="float-render"><span class="ico">↻</span> プレビューを更新</button>
+
+<script>
+/* =========================================================
+   生成される記事ページのテンプレート（blog.html と同じ体裁）
+   {{...}} の部分を入力内容で差し替えます
+   ========================================================= */
+const TEMPLATE = [
+'<!DOCTYPE html>',
+'<html lang="ja">',
+'<head>',
+'  <meta charset="UTF-8"/>',
+'  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>',
+'  <title>{{TITLE_TAG}} - 鳥飼茶房 | Journal</title>',
+'  <meta name="description" content="{{DESC}}"/>',
+'  <meta property="og:title" content="{{TITLE_TAG}} — 鳥飼茶房"/>',
+'  <meta property="og:description" content="{{DESC}}"/>',
+'  <meta property="og:type" content="article"/>',
+'  <meta property="og:url" content="https://www.torikai-sabo.com/{{FILENAME}}"/>',
+'  <link rel="canonical" href="https://www.torikai-sabo.com/{{FILENAME}}"/>',
+'  {{OG_IMAGE}}',
+'  <meta name="twitter:card" content="summary_large_image"/>',
+'  <link rel="preconnect" href="https://fonts.googleapis.com"/>',
+'  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>',
+'  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Noto+Serif+JP:wght@300;400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>',
+'  <style>',
+'    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}',
+'    :root{--ink:#1c1810;--ink-mid:#4a4030;--ink-soft:#7a6e60;--ink-faint:#b0a598;--paper:#f8f4ee;--paper-warm:#f0ebe0;--matcha:#3d5c36;--gold:#a07840;--gold-pale:#d4b87a;--border:rgba(90,70,40,0.15);--ff-jp:"Shippori Mincho","Noto Serif JP",serif;--ff-en:"EB Garamond",Georgia,serif}',
+'    html{scroll-behavior:smooth;font-size:16px}',
+"    body{font-family:var(--ff-jp);color:var(--ink);line-height:1.9;overflow-x:hidden;background-color:var(--paper);background-image:url('images/bg-wall.jpg');background-size:cover;background-position:center;background-attachment:fixed;background-repeat:no-repeat}",
+'    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:64px;background:rgba(248,244,238,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:all .4s}',
+'    nav.scrolled{height:54px;background:rgba(248,244,238,0.97);box-shadow:0 1px 20px rgba(0,0,0,0.06)}',
+'    .nav-logo{font-family:var(--ff-jp);font-size:17px;font-weight:500;letter-spacing:.2em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:10px}',
+'    .nav-logo img{height:30px;width:auto;opacity:.9}',
+'    .nav-logo-mark{height:30px;width:auto;opacity:.9;color:var(--ink-soft);flex-shrink:0;transition:color .25s}',
+'    .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}',
+'    .nav-links a{font-size:12px;letter-spacing:.18em;color:var(--ink-soft);text-decoration:none;transition:color .2s;font-family:var(--ff-en);text-transform:uppercase}',
+'    .nav-links a:hover,.nav-links a.active{color:var(--matcha)}',
+'    .nav-right{display:flex;align-items:center}',
+'    .lang-switch{display:flex;gap:0;margin-right:1.2rem}',
+'    .lang-btn{font-family:var(--ff-en);font-size:11px;letter-spacing:.15em;padding:5px 11px;border:1px solid var(--border);background:transparent;color:var(--ink-soft);cursor:pointer;transition:all .2s}',
+'    .lang-btn:first-child{border-right:none}',
+'    .lang-btn.active{background:var(--matcha);color:white;border-color:var(--matcha)}',
+'    .nav-reserve{font-size:11px;letter-spacing:.18em;padding:8px 20px;border:1px solid var(--gold);color:var(--gold);text-decoration:none;font-family:var(--ff-jp);transition:all .25s}',
+'    .nav-reserve:hover{background:var(--gold);color:white}',
+'    .bi-en{font-family:var(--ff-en);font-size:.78em;letter-spacing:.18em;color:var(--ink-soft);font-style:italic}',
+'    [data-lang="en"] .bi-jp{display:none}',
+'    [data-lang="en"] .bi-en{font-style:normal;font-size:1em;color:inherit}',
+'    [data-lang="ja"] .bi-en{display:none}',
+'    .page-hero{padding:10rem 2rem 5rem;text-align:center;background:rgba(28,24,16,0.55)}',
+'    .page-hero-label{font-family:var(--ff-en);font-size:11px;letter-spacing:.5em;color:var(--gold-pale);text-transform:uppercase;margin-bottom:.5rem}',
+'    .page-hero h1{font-size:clamp(28px,5vw,44px);font-weight:400;letter-spacing:.25em;color:rgba(240,235,224,0.92);margin-bottom:1.5rem}',
+'    .page-hero-line{width:1px;height:40px;background:var(--gold-pale);margin:0 auto;opacity:.6}',
+'    .section-wrap{max-width:780px;margin:0 auto;padding:0 2rem}',
+'    .blog-post{padding:6rem 0 7rem;background:rgba(248,244,238,0.78)}',
+'    .blog-date{font-family:var(--ff-en);font-size:12px;letter-spacing:.3em;color:var(--ink-faint);margin-bottom:.5rem}',
+'    .blog-title{font-size:clamp(20px,3vw,28px);font-weight:500;letter-spacing:.15em;color:var(--ink);margin-bottom:2.5rem}',
+'    .blog-hero-img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block;margin-bottom:3rem;border:1px solid var(--border)}',
+'    .blog-img{width:100%;height:auto;display:block;margin:2.5rem 0;border:1px solid var(--border)}',
+'    .blog-body{font-size:15px;line-height:2.8;color:var(--ink-mid)}',
+'    .blog-body p{margin-bottom:1rem}',
+'    .blog-body .break{height:1.5rem}',
+'    .blog-body strong{font-weight:600;color:var(--ink)}',
+'    .blog-subhead{font-size:clamp(17px,2.3vw,20px);font-weight:600;letter-spacing:.12em;color:var(--ink);margin:2.6rem 0 1rem;padding-left:.85rem;border-left:2px solid var(--matcha);line-height:1.8}',
+'    .blog-sign{font-size:15px;color:var(--ink);margin-top:3rem;text-align:right}',
+'    .reserve{padding:6rem 0;background:#7a6242;text-align:center}',
+'    .reserve h2{font-size:clamp(20px,3.5vw,28px);font-weight:400;letter-spacing:.25em;color:rgba(255,255,255,0.92);margin-bottom:1.5rem}',
+'    .reserve p{font-size:14px;letter-spacing:.12em;color:rgba(255,255,255,0.6);line-height:2.4;margin-bottom:2.5rem}',
+'    .reserve-btn{display:inline-block;padding:14px 48px;background:transparent;color:rgba(255,255,255,0.92);font-family:var(--ff-jp);font-size:13px;letter-spacing:.22em;border:1px solid rgba(255,255,255,0.6);text-decoration:none;transition:all .25s}',
+'    .reserve-btn:hover{background:rgba(255,255,255,0.92);color:#7a6242}',
+'    .reserve-sns{display:flex;justify-content:center;gap:1.2rem;margin-top:2rem}',
+'    .reserve-sns a{font-size:12px;letter-spacing:.18em;padding:9px 24px;border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.7);text-decoration:none;transition:all .2s}',
+'    .reserve-sns a:hover{border-color:rgba(255,255,255,0.7);color:white}',
+'    footer{background:var(--ink);padding:4rem 2rem;text-align:center}',
+'    .footer-logo{font-size:20px;letter-spacing:.22em;color:rgba(240,235,224,0.75);margin-bottom:.8rem}',
+'    .footer-sub{font-family:var(--ff-en);font-size:11px;letter-spacing:.3em;color:rgba(240,235,224,0.3);margin-bottom:1.5rem}',
+'    .footer-links{display:flex;justify-content:center;gap:2rem;margin-bottom:1.5rem;list-style:none}',
+'    .footer-links a{font-family:var(--ff-en);font-size:11px;letter-spacing:.18em;color:rgba(240,235,224,0.35);text-decoration:none;text-transform:uppercase}',
+'    .footer-copy{font-size:11px;letter-spacing:.1em;color:rgba(240,235,224,0.2)}',
+'    .reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}',
+'    .reveal.show{opacity:1;transform:translateY(0)}',
+'    /* MOBILE MENU */',
+'    .nav-toggle{display:none;flex-direction:column;align-items:center;justify-content:center;width:40px;height:40px;flex-shrink:0;background:transparent;border:none;cursor:pointer;padding:0;margin-left:.6rem;z-index:120}',
+'    .nav-toggle span{display:block;width:22px;min-width:22px;height:2px;background:var(--ink);transition:transform .35s ease,opacity .25s ease;position:relative;flex-shrink:0}',
+'    .nav-toggle span+span{margin-top:6px}',
+'    .nav-toggle.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}',
+'    .nav-toggle.open span:nth-child(2){opacity:0}',
+'    .nav-toggle.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}',
+'    .nav-overlay{display:none;position:fixed;inset:0;background:rgba(28,24,16,0.45);opacity:0;visibility:hidden;transition:opacity .4s ease,visibility .4s ease;z-index:105}',
+'    .nav-overlay.open{opacity:1;visibility:visible}',
+'    .mobile-menu{display:none;position:fixed;top:0;right:0;height:100%;width:min(50vw,200px);background:var(--paper);border-left:1px solid var(--border);box-shadow:-8px 0 30px rgba(0,0,0,0.12);transform:translateX(100%);transition:transform .4s cubic-bezier(.4,0,.2,1);z-index:110;flex-direction:column;padding:5.5rem 2rem 2.5rem}',
+'    .mobile-menu.open{transform:translateX(0)}',
+'    .mobile-menu a.m-link{font-family:var(--ff-en);font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;padding:1rem 0;border-bottom:1px solid var(--border);transition:color .2s}',
+'    .mobile-menu a.m-link:hover,.mobile-menu a.m-link.active{color:var(--matcha)}',
+'    .mobile-menu-foot{margin-top:auto;padding-top:1.8rem}',
+'    .mobile-menu .lang-switch{margin:0 0 1.4rem;justify-content:center}',
+'    .mobile-menu .nav-reserve{display:block;text-align:center}',
+'    @media(max-width:768px){#nav{padding:0 1rem}.nav-links,.nav-reserve{display:none}.nav-right>.lang-switch{display:none}.nav-toggle{display:flex;position:fixed;top:12px;right:1rem}.mobile-menu{display:flex}.nav-overlay{display:block}.lang-switch{margin-right:0}.page-hero{padding:8rem 1.5rem 4rem}}',
+'    /* BACK TO LIST */',
+'    .blog-back-foot{text-align:center;padding:0 2rem 5rem;background:rgba(28,24,16,0.55)}',
+'    .blog-back-foot a{display:inline-flex;align-items:center;gap:.5em;font-family:var(--ff-en);font-size:13px;letter-spacing:.2em;color:var(--gold-pale);text-decoration:none;border:1px solid rgba(212,184,122,0.4);padding:12px 32px;transition:all .25s}',
+'    .blog-back-foot a:hover{background:rgba(212,184,122,0.12);color:var(--paper);border-color:var(--gold-pale)}',
+'    @media(max-width:768px){nav{padding:0 1rem}.nav-links,.nav-reserve{display:none}.lang-switch{margin-right:0}.page-hero{padding:8rem 1.5rem 4rem}}',
+'  </style>',
+'</head>',
+'<body data-lang="ja">',
+'<nav id="nav">',
+'  <a href="index.html" class="nav-logo"><svg class="nav-logo-mark" viewBox="0 0 216 215" role="img" aria-label="鳥飼茶房ロゴ" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M 95.7,1.0999999999999943 C 52.6,5.599999999999994 15.699999999999989,37.5 4.0,80.5 C 0.8999999999999999,91.8 0.09999999999999964,115.0 2.4000000000000004,127.39999999999999 C 12.700000000000001,181.89999999999998 63.4,219.89999999999998 118.30000000000001,214.2 C 141.9,211.7 159.60000000000002,204.0 178.8,188.0 C 193.10000000000002,176.1 206.3,154.5 211.70000000000002,134.5 C 214.10000000000002,125.5 214.4,122.8 214.4,107.5 C 214.4,92.3 214.1,89.5 211.70000000000002,80.79999999999998 C 200.00000000000003,37.099999999999994 163.4,5.599999999999966 118.9,1.0 C 107.80000000000001,-0.09999999999999432 107.0,-0.09999999999999432 95.7,1.0999999999999943 M 131.5,11.799999999999983 C 152.2,17.599999999999994 166.7,26.299999999999983 180.4,41.19999999999999 C 197.1,59.19999999999999 206.1,82.1 206.3,107.0 C 206.4,135.10000000000002 196.3,159.0 175.60000000000002,178.8 C 161.60000000000002,192.2 145.40000000000003,200.6 125.9,204.6 C 113.80000000000001,207.0 93.6,206.1 81.5,202.6 C 40.699999999999996,190.7 12.099999999999994,155.39999999999998 9.3,113.5 C 7.9,92.2 14.700000000000003,68.5 27.5,50.5 C 33.5,42.099999999999994 47.099999999999994,29.30000000000001 56.0,23.799999999999983 C 65.4,17.99999999999997 77.0,13.299999999999983 88.0,10.899999999999977 C 99.2,8.399999999999977 121.0,8.899999999999977 131.5,11.799999999999983 M 106.7,23.599999999999994 C 105.4,28.0 103.0,42.599999999999994 101.30000000000001,56.599999999999994 C 98.80000000000001,77.69999999999999 98.80000000000001,126.4 101.30000000000001,144.0 C 102.30000000000001,150.9 103.70000000000002,164.60000000000002 104.5,174.4 C 106.8,203.8 108.2,205.2 110.0,179.9 C 110.6,171.4 111.7,160.2 112.5,155.0 C 117.7,120.1 116.9,72.80000000000001 110.4,34.0 C 108.60000000000001,23.400000000000006 107.60000000000001,20.5 106.7,23.599999999999994 M 35.0,85.79999999999998 C 35.0,96.39999999999998 49.2,122.39999999999998 63.7,138.0 C 75.30000000000001,150.6 96.4,166.9 98.4,164.9 C 100.30000000000001,163.0 87.80000000000001,136.1 78.4,121.69999999999999 C 68.2,105.99999999999999 47.2,86.6 37.300000000000004,83.6 C 35.300000000000004,82.9 35.00000000000001,83.19999999999999 35.00000000000001,85.79999999999998 M 173.0,86.6 C 155.0,98.5 137.9,116.3 127.60000000000001,134.0 C 122.80000000000001,142.2 117.30000000000001,155.5 116.4,160.9 C 115.80000000000001,164.6 116.0,165.0 117.7,165.0 C 121.2,165.0 134.9,155.2 144.0,146.2 C 157.0,133.3 170.4,111.7 177.4,92.19999999999999 C 181.3,81.29999999999998 181.20000000000002,81.19999999999999 173.0,86.6"/></svg> 鳥飼茶房</a>',
+'  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html" class="active">Blog</a></li><li><a href="online.html">Online</a></li></ul>',
+'  <div class="nav-right">',
+'    <div class="lang-switch"><button class="lang-btn active" onclick="setLang(\'ja\')">JP</button><button class="lang-btn" onclick="setLang(\'en\')">EN</button></div>',
+'    <a href="https://airrsv.net/torikai-sabo/calendar" class="nav-reserve" target="_blank" rel="noopener"><span class="bi-jp">ご予約</span><span class="bi-en">Reserve</span></a>',
+'  </div>',
+'  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobileMenu">',
+'    <span></span><span></span><span></span>',
+'  </button>',
+'</nav>',
+'',
+'<div class="nav-overlay" id="navOverlay"></div>',
+'<nav class="mobile-menu" id="mobileMenu" aria-label="モバイルメニュー">',
+'  <a href="index.html" class="m-link"><span class="bi-jp">ホーム</span><span class="bi-en">Home</span></a>',
+'  <a href="about.html" class="m-link"><span class="bi-jp">店主のこと</span><span class="bi-en">About</span></a>',
+'  <a href="menu.html" class="m-link"><span class="bi-jp">お品書き</span><span class="bi-en">Menu</span></a>',
+'  <a href="access.html" class="m-link"><span class="bi-jp">店舗情報</span><span class="bi-en">Access</span></a>',
+'  <a href="blog.html" class="m-link active"><span class="bi-jp">ブログ</span><span class="bi-en">Blog</span></a>',
+'  <div class="mobile-menu-foot">',
+'    <div class="lang-switch"><button class="lang-btn active" onclick="setLang(\'ja\')">JP</button><button class="lang-btn" onclick="setLang(\'en\')">EN</button></div>',
+'    <a href="https://airrsv.net/torikai-sabo/calendar" class="nav-reserve" target="_blank" rel="noopener"><span class="bi-jp">ご予約</span><span class="bi-en">Reserve</span></a>',
+'  </div>',
+'</nav>',
+'',
+'<section class="page-hero">',
+'  <p class="page-hero-label">Journal</p>',
+'  <h1><span class="bi-jp">ブログ</span><span class="bi-en">Blog</span></h1>',
+'  <div class="page-hero-line"></div>',
+'</section>',
+'',
+'<article class="blog-post" aria-labelledby="post-title">',
+'  <div class="section-wrap">',
+'    <div class="reveal">',
+'      <p class="blog-date">{{DATE_EN}}</p>',
+'      <h2 class="blog-title" id="post-title">',
+'        <span class="bi-jp">{{TITLE_JP}}</span>',
+'        <span class="bi-en">{{TITLE_EN}}</span>',
+'      </h2>',
+'    </div>',
+'    <div class="blog-body reveal" style="transition-delay:.2s">',
+'{{BODY}}',
+'      <p class="blog-sign">{{SIGN_DATE}}<br/>鳥飼茶房</p>',
+'    </div>',
+'  </div>',
+'</article>',
+'',
+'<div class="blog-back-foot">',
+'  <a href="blog.html"><span class="bi-jp">← 記事一覧へ戻る</span><span class="bi-en">← Back to all posts</span></a>',
+'</div>',
+'',
+'<section class="reserve">',
+'  <h2 class="reveal"><span class="bi-jp">ご予約・お問い合わせ</span><span class="bi-en">Reservations &amp; Enquiries</span></h2>',
+'  <p class="reveal" style="transition-delay:.15s"><span class="bi-jp">営業日はInstagramにてご確認ください。<br/>お問い合わせはInstagram DM・LINEにて承っております。</span><span class="bi-en">Please check Instagram for opening days.<br/>Contact us via Instagram DM or LINE.</span></p>',
+'  <a href="https://airrsv.net/torikai-sabo/calendar" class="reserve-btn reveal" style="transition-delay:.3s" target="_blank" rel="noopener"><span class="bi-jp">ご予約カレンダー</span><span class="bi-en">Book a Table</span></a>',
+'  <div class="reserve-sns reveal" style="transition-delay:.4s"><a href="https://www.instagram.com/torikai_sabo" target="_blank" rel="noopener">Instagram</a><a href="https://line.me/R/ti/p/@799cawgy" target="_blank" rel="noopener">LINE</a></div>',
+'</section>',
+'',
+'<footer>',
+'  <p class="footer-logo">鳥飼茶房</p>',
+'  <p class="footer-sub">Japanese Tea House — Torikai, Jōnan-ku, Fukuoka</p>',
+'  <ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="introduction.html">Introduction</a></li><li><a href="products.html">Products</a></li><li><a href="access.html">Access</a></li><li><a href="blog.html">Blog</a></li><li><a href="online.html">Online</a></li></ul>',
+'  <p class="footer-copy">© 2025 鳥飼茶房 All rights reserved.</p>',
+'</footer>',
+'',
+'<script>',
+"const nav=document.getElementById('nav');window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60)});",
+"const revealEls=document.querySelectorAll('.reveal');const observer=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}})},{threshold:.12});revealEls.forEach(function(el){observer.observe(el)});",
+"function setLang(l){document.body.setAttribute('data-lang',l);document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.toggle('active',b.textContent.toLowerCase()===l)})}",
+"const navToggle=document.getElementById('navToggle');const mobileMenu=document.getElementById('mobileMenu');const navOverlay=document.getElementById('navOverlay');",
+"function closeMenu(){navToggle.classList.remove('open');mobileMenu.classList.remove('open');navOverlay.classList.remove('open');navToggle.setAttribute('aria-expanded','false');document.body.style.overflow='';}",
+"function toggleMenu(){const willOpen=!mobileMenu.classList.contains('open');navToggle.classList.toggle('open',willOpen);mobileMenu.classList.toggle('open',willOpen);navOverlay.classList.toggle('open',willOpen);navToggle.setAttribute('aria-expanded',willOpen?'true':'false');document.body.style.overflow=willOpen?'hidden':'';}",
+"navToggle.addEventListener('click',toggleMenu);navOverlay.addEventListener('click',closeMenu);mobileMenu.querySelectorAll('a.m-link').forEach(function(a){a.addEventListener('click',closeMenu)});",
+'<\/script>',
+'</body>',
+'</html>'
+].join('\n');
+
+/* ---------- ユーティリティ ---------- */
+function esc(s){
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// エスケープ済みテキストの **強調** を <strong> に変換
+function inline(s){
+  return s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+}
+
+// 本文テキスト → <p>段落</p>／空行は余白／行頭 ## は小見出し／**…** は太字
+function buildBody(raw){
+  const lines = raw.replace(/\r\n/g,'\n').split('\n');
+  let html = '';
+  let prevBlank = false;
+  for(let i=0;i<lines.length;i++){
+    const t = lines[i].trim();
+    if(t===''){
+      // 連続する空行はひとつの余白にまとめる（先頭・末尾の空行は無視）
+      if(!prevBlank && html!==''){ html += '      <div class="break"></div>\n'; }
+      prevBlank = true;
+    }else if(/^##\s+/.test(t)){
+      // 行頭 ## → 小見出し
+      const head = inline(esc(t.replace(/^##\s+/,'')));
+      html += '      <h3 class="blog-subhead">'+head+'</h3>\n';
+      prevBlank = false;
+    }else{
+      html += '      <p>'+inline(esc(t))+'</p>\n';
+      prevBlank = false;
+    }
+  }
+  // 末尾の余白を除去
+  html = html.replace(/      <div class="break"><\/div>\n$/,'');
+  return html.replace(/\n$/,'');
+}
+
+// YYYY-MM-DD → "May 7, 2026"
+function dateEN(iso){
+  if(!iso) return '';
+  const d = new Date(iso+'T00:00:00');
+  if(isNaN(d)) return '';
+  return d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+}
+// YYYY-MM-DD → "2026年 5月 7日"
+function dateJP(iso){
+  if(!iso) return '';
+  const p = iso.split('-');
+  if(p.length!==3) return '';
+  return p[0]+'年　'+Number(p[1])+'月　'+Number(p[2])+'日';
+}
+function fileName(iso){
+  return iso ? 'post-'+iso+'.html' : 'post-YYYY-MM-DD.html';
+}
+
+/* ---------- 基本 ---------- */
+const el = id => document.getElementById(id);
+
+let blocks = [];   // 本文ブロック：{type:'text',value} | {type:'image',data,url}
+let dirty = false;
+
+/* ---------- ブロック操作 ---------- */
+function addBlock(type){
+  blocks.push(type==='text' ? {type:'text',value:''} : {type:'image',data:null,url:''});
+  renderForm(); setDirty();
+}
+function removeBlock(i){ blocks.splice(i,1); renderForm(); setDirty(); }
+function moveBlock(i,dir){
+  const j=i+dir;
+  if(j<0 || j>=blocks.length) return;
+  const t=blocks[i]; blocks[i]=blocks[j]; blocks[j]=t;
+  renderForm(); setDirty();
+}
+
+/* ---------- フォーム描画 ---------- */
+function renderForm(){
+  const wrap=el('blocks');
+  wrap.innerHTML='';
+  if(blocks.length===0){
+    const e=document.createElement('div');
+    e.className='block-empty';
+    e.textContent='下のボタンから文章や写真を追加してください';
+    wrap.appendChild(e);
+  }else{
+    blocks.forEach((b,i)=>wrap.appendChild(buildCard(b,i)));
+  }
+  updateImgTotal();
+}
+
+function buildCard(b,i){
+  const card=document.createElement('div'); card.className='block';
+  const head=document.createElement('div'); head.className='block-head';
+  const kind=document.createElement('span'); kind.className='block-kind';
+  kind.textContent = b.type==='text' ? '文章' : '写真';
+  const up=document.createElement('button'); up.textContent='↑'; up.title='上へ'; up.disabled=(i===0);
+  up.addEventListener('click',()=>moveBlock(i,-1));
+  const down=document.createElement('button'); down.textContent='↓'; down.title='下へ'; down.disabled=(i===blocks.length-1);
+  down.addEventListener('click',()=>moveBlock(i,1));
+  const del=document.createElement('button'); del.textContent='×'; del.title='削除'; del.className='del';
+  del.addEventListener('click',()=>removeBlock(i));
+  head.append(kind,up,down,del);
+
+  const body=document.createElement('div'); body.className='block-body';
+  if(b.type==='text'){
+    const ta=document.createElement('textarea');
+    ta.value=b.value;
+    ta.placeholder='ここに文章を。改行で段落、空行で余白。\n**強調**で太字、行頭に ## をつけると小見出しになります。';
+    ta.addEventListener('input',()=>{ b.value=ta.value; setDirty(); });
+    body.appendChild(ta);
+  }else{
+    buildImageBody(body,b);
+  }
+  card.append(head,body);
+  return card;
+}
+
+function buildImageBody(body,b){
+  const src=b.data||b.url;
+  if(src){
+    const prev=document.createElement('div'); prev.className='block-img-preview';
+    const img=document.createElement('img'); img.src=src; img.alt='選択した画像';
+    const meta=document.createElement('div'); meta.className='block-img-meta';
+    const size=document.createElement('span');
+    size.textContent = b.data ? ('埋め込み 約 '+fmtSize(dataUrlBytes(b.data))) : 'URL指定の画像';
+    const change=document.createElement('button'); change.className='block-img-change';
+    change.textContent='別の写真に変える';
+    change.addEventListener('click',()=>pickInto(b));
+    meta.append(size,change);
+    prev.append(img,meta);
+    body.appendChild(prev);
+  }else{
+    const pick=document.createElement('button'); pick.className='block-img-pick'; pick.textContent='画像を選ぶ';
+    pick.addEventListener('click',()=>pickInto(b));
+    body.appendChild(pick);
+    const det=document.createElement('details'); det.className='block-url';
+    const sum=document.createElement('summary'); sum.textContent='または画像URLを貼る';
+    const inp=document.createElement('input'); inp.type='text'; inp.placeholder='https://...';
+    inp.addEventListener('input',()=>{ b.url=inp.value.trim(); setDirty(); });
+    inp.addEventListener('change',()=>{ if(b.url) renderForm(); });
+    det.append(sum,inp);
+    body.appendChild(det);
+  }
+}
+
+function pickInto(b){
+  const inp=document.createElement('input');
+  inp.type='file'; inp.accept='image/*';
+  inp.addEventListener('change',async e=>{
+    const file=e.target.files&&e.target.files[0];
+    if(!file) return;
+    try{
+      b.data=await compressImage(file);
+      b.url='';
+      renderForm(); setDirty();
+    }catch(err){ toast(err.message||'画像を処理できませんでした'); }
+  });
+  inp.click();
+}
+
+function updateImgTotal(){
+  const imgs=blocks.filter(b=>b.type==='image'&&b.data);
+  if(!imgs.length){ el('img-total').textContent=''; return; }
+  const total=imgs.reduce((s,b)=>s+dataUrlBytes(b.data),0);
+  el('img-total').textContent='埋め込み写真：'+imgs.length+'枚 ・ 合計 約 '+fmtSize(total);
+}
+
+/* ---------- HTML生成 ---------- */
+function buildHTML(){
+  const iso=el('f-date').value;
+  const titleJP=el('f-title-jp').value.trim()||'無題の記事';
+  const titleEN=el('f-title-en').value.trim()||titleJP;
+
+  // description：最初の文章ブロックの冒頭から
+  const firstText=(blocks.find(b=>b.type==='text'&&b.value.trim())||{value:''}).value;
+  const plain=firstText.replace(/\s+/g,' ').trim().slice(0,118);
+  const desc=esc(plain||(titleJP+' — 鳥飼茶房のブログ'));
+
+  // og:image：URL指定の画像があればそれを使う（埋め込み画像はデータが長すぎるため対象外）
+  const urlImg=(blocks.find(b=>b.type==='image'&&!b.data&&b.url)||{url:''}).url;
+  const ogImage = urlImg ? '<meta property="og:image" content="'+esc(urlImg)+'"/>' : '';
+
+  // 本文：ブロックを上から順にHTML化
+  let bodyHTML='';
+  blocks.forEach(b=>{
+    if(b.type==='text'){
+      const t=buildBody(b.value);
+      if(t) bodyHTML+=t+'\n';
+    }else{
+      const src=b.data||b.url;
+      if(src) bodyHTML+='      <img class="blog-img reveal" src="'+esc(src)+'" alt="'+esc(titleJP)+' / 鳥飼茶房"/>\n';
+    }
+  });
+  bodyHTML=bodyHTML.replace(/\n$/,'');
+
+  return TEMPLATE
+    .replaceAll('{{TITLE_TAG}}', esc(titleJP))
+    .replaceAll('{{DESC}}', desc)
+    .replaceAll('{{OG_IMAGE}}', ogImage)
+    .replaceAll('{{FILENAME}}', fileName(iso))
+    .replaceAll('{{DATE_EN}}', esc(dateEN(iso)))
+    .replaceAll('{{TITLE_JP}}', esc(titleJP))
+    .replaceAll('{{TITLE_EN}}', esc(titleEN))
+    .replaceAll('{{BODY}}', bodyHTML)
+    .replaceAll('{{SIGN_DATE}}', esc(dateJP(iso)));
+}
+
+function render(){ el('preview').srcdoc=buildHTML(); setClean(); }
+
+/* ---------- 未反映ステータス ---------- */
+function setDirty(){
+  if(dirty) return;
+  dirty=true;
+  el('pv-dot').classList.add('dirty');
+  el('pv-status').textContent='未反映の変更があります — 「プレビューを更新」を押してください';
+  el('btn-render').classList.add('pulse');
+  el('float-render').classList.add('show');
+}
+function setClean(){
+  dirty=false;
+  el('pv-dot').classList.remove('dirty');
+  el('pv-status').textContent='プレビューは最新です';
+  el('btn-render').classList.remove('pulse');
+  el('float-render').classList.remove('show');
+}
+
+/* ---------- 画像の圧縮 ---------- */
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      const im = new Image();
+      im.onload = ()=>{
+        const maxW = 1280;
+        let w = im.width, h = im.height;
+        if(w > maxW){ h = Math.round(h*maxW/w); w = maxW; }
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0,0,w,h);   // 透過画像を白地に
+        ctx.drawImage(im,0,0,w,h);
+        resolve(c.toDataURL('image/jpeg',0.82));
+      };
+      im.onerror = ()=>reject(new Error('画像を読み込めませんでした（画像ファイルか確認してください）'));
+      im.src = reader.result;
+    };
+    reader.onerror = ()=>reject(new Error('ファイルを読み込めませんでした'));
+    reader.readAsDataURL(file);
+  });
+}
+function dataUrlBytes(d){
+  const b64 = d.slice(d.indexOf(',')+1);
+  return Math.round(b64.length*3/4);
+}
+function fmtSize(b){
+  return b >= 1048576 ? (b/1048576).toFixed(1)+' MB' : Math.round(b/1024)+' KB';
+}
+
+/* ---------- 出力 ---------- */
+function download(){
+  const blob = new Blob([buildHTML()],{type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = fileName(el('f-date').value);
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},100);
+  toast('ダウンロードしました');
+}
+
+async function copy(){
+  const html = buildHTML();
+  try{
+    await navigator.clipboard.writeText(html);
+    toast('HTMLをコピーしました');
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=html;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');toast('HTMLをコピーしました');}
+    catch(_){toast('コピーできませんでした');}
+    ta.remove();
+  }
+}
+
+/* ---------- アーカイブカードHTML生成 ---------- */
+function buildArchiveCard(){
+  const iso=el('f-date').value;
+  const titleJP=el('f-title-jp').value.trim() || '無題';
+  const titleEN=el('f-title-en').value.trim();
+  const fname=fileName(iso);
+
+  // 本文の最初のtextブロックを抜粋に使う
+  let excerpt='';
+  for(const b of blocks){
+    if(b.type==='text' && b.value){
+      excerpt=b.value.split('\n').filter(l=>l.trim())[0]||'';
+      break;
+    }
+  }
+  if(excerpt.length>80) excerpt=excerpt.slice(0,80)+'…';
+
+  // 最初の画像をサムネに使う（あれば）
+  let thumb='';
+  for(const b of blocks){
+    if(b.type==='image' && b.value){
+      thumb=b.value.trim();
+      break;
+    }
+  }
+
+  const thumbHTML = thumb
+    ? `    <a href="${esc(fname)}" class="archive-thumb"><img src="${esc(thumb)}" alt="${esc(titleJP)}" loading="lazy"/></a>\n`
+    : '';
+
+  return `<article class="archive-card">
+${thumbHTML}    <div class="archive-meta">
+      <p class="archive-date">${esc(dateEN(iso))}</p>
+      <h3 class="archive-title">
+        <a href="${esc(fname)}">
+          <span class="bi-jp">${esc(titleJP)}</span>
+          <span class="bi-en">${esc(titleEN)}</span>
+        </a>
+      </h3>
+      <p class="archive-excerpt">${esc(excerpt)}</p>
+      <a href="${esc(fname)}" class="archive-link"><span class="bi-jp">続きを読む →</span><span class="bi-en">Read more →</span></a>
+    </div>
+  </article>`;
+}
+
+async function copyArchive(){
+  const html = buildArchiveCard();
+  try{
+    await navigator.clipboard.writeText(html);
+    toast('アーカイブカードHTMLをコピーしました');
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=html;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');toast('アーカイブカードHTMLをコピーしました');}
+    catch(_){toast('コピーできませんでした');}
+    ta.remove();
+  }
+}
+
+let toastTimer;
+function toast(msg){
+  const t=el('toast');t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
+/* ---------- イベント・初期化 ---------- */
+['f-date','f-title-jp','f-title-en'].forEach(id=>{
+  el(id).addEventListener('input', setDirty);
+});
+el('f-date').addEventListener('input', ()=>{ el('f-filename').textContent = fileName(el('f-date').value); });
+el('add-text').addEventListener('click', ()=>addBlock('text'));
+el('add-image').addEventListener('click', ()=>addBlock('image'));
+el('btn-render').addEventListener('click', render);
+el('float-render').addEventListener('click', render);
+el('btn-download').addEventListener('click', download);
+el('btn-copy').addEventListener('click', copy);
+el('btn-archive').addEventListener('click', copyArchive);
+// Ctrl / ⌘ + Enter でプレビュー更新
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key==='Enter'){ e.preventDefault(); render(); }
+});
+
+(function(){
+  const now=new Date();
+  const iso=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  el('f-date').value=iso;
+  el('f-filename').textContent = fileName(iso);
+  blocks.push({type:'text',value:''});   // 最初に文章ブロックを1つ用意
+  renderForm();
+  render();
+})();
+</script>
+</body>
+</html>
