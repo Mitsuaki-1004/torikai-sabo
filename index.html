@@ -59,9 +59,9 @@
       line-height: 1.9;
       overflow-x: hidden;
       background-color: var(--paper);
-      background-image: url('https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/backgroundarea/i061724566fc5eece/version/1775546592/image.png');
+      background-image: url('images/bg-wall.jpg');
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       background-attachment: fixed;
       background-repeat: no-repeat;
     }
@@ -249,9 +249,9 @@
     .hero-bg {
       position: absolute;
       inset: 0;
-      background-image: url('https://image.jimcdn.com/app/cms/image/transf/none/path/s8704c2539aabb152/backgroundarea/i061724566fc5eece/version/1775546592/image.png');
+      background-image: url('images/bg-wall.jpg');
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       transform: scale(1.06);
       transition: transform 10s ease-out;
     }
@@ -260,14 +260,11 @@
       transform: scale(1);
     }
 
-    /* 明るめオーバーレイ */
+    /* スクショ焼き込み済みのためoverlay無効 */
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg,
-          rgba(20, 16, 10, 0.30) 0%,
-          rgba(20, 16, 10, 0.15) 45%,
-          rgba(20, 16, 10, 0.50) 100%);
+      background: transparent;
     }
 
     .hero-content {
@@ -432,20 +429,9 @@
       border-color: rgba(240, 235, 224, 0.85);
     }
 
+    /* SCROLLはスクショに焼き込み済みのため非表示 */
     .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      color: rgba(240, 235, 224, 0.4);
-      font-family: var(--ff-en);
-      font-size: 10px;
-      letter-spacing: .3em;
-      text-transform: uppercase;
+      display: none;
     }
 
     .hero-scroll-line {
