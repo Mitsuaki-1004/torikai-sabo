@@ -172,6 +172,7 @@
       <button class="btn ghost" id="btn-download">ダウンロード</button>
       <button class="btn ghost" id="btn-copy">コピー</button>
       <button class="btn ghost" id="btn-archive">アーカイブカードHTMLをコピー</button>
+      <button class="btn ghost" id="btn-latest">最新記事セクションHTMLをコピー</button>
     </div>
   </section>
 
@@ -708,6 +709,62 @@ async function copyArchive(){
   }
 }
 
+/* ---------- 最新記事セクションHTML生成（blog.html差し替え用） ---------- */
+function buildLatestSection(){
+  const iso=el('f-date').value;
+  const titleJP=el('f-title-jp').value.trim()||'無題の記事';
+  const titleEN=el('f-title-en').value.trim()||titleJP;
+  const fname=fileName(iso);
+
+  // 本文ブロック → HTML
+  let bodyHTML='';
+  blocks.forEach(b=>{
+    if(b.type==='text'){
+      const t=buildBody(b.value);
+      if(t) bodyHTML+=t+'\n';
+    }else{
+      const src=b.data||b.url;
+      if(src) bodyHTML+='      <img class="blog-img reveal" src="'+esc(src)+'" alt="'+esc(titleJP)+' / 鳥飼茶房"/>\n';
+    }
+  });
+  bodyHTML=bodyHTML.replace(/\n$/,'');
+
+  return `<!-- 最新記事：${esc(titleJP)}   -->
+<!-- ============================= -->
+<article class="blog-post" aria-labelledby="latest-title">
+  <div class="section-wrap">
+    <div class="reveal">
+      <p class="blog-date">${esc(dateEN(iso))}</p>
+      <h2 class="blog-title" id="latest-title">
+        <span class="bi-jp">${esc(titleJP)}</span>
+        <span class="bi-en">${esc(titleEN)}</span>
+      </h2>
+    </div>
+    <div class="blog-body reveal" style="transition-delay:.2s">
+${bodyHTML}
+      <p class="blog-sign">${esc(dateJP(iso))}<br/>鳥飼茶房</p>
+    </div>
+    <div class="blog-read-individual reveal">
+      <a href="${esc(fname)}"><span class="bi-jp">この記事を個別ページで見る →</span><span class="bi-en">View this post →</span></a>
+    </div>
+  </div>
+</article>`;
+}
+
+async function copyLatest(){
+  const html = buildLatestSection();
+  try{
+    await navigator.clipboard.writeText(html);
+    toast('最新記事セクションHTMLをコピーしました');
+  }catch(e){
+    const ta=document.createElement('textarea');
+    ta.value=html;document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');toast('最新記事セクションHTMLをコピーしました');}
+    catch(_){toast('コピーできませんでした');}
+    ta.remove();
+  }
+}
+
 let toastTimer;
 function toast(msg){
   const t=el('toast');t.textContent=msg;t.classList.add('show');
@@ -726,6 +783,7 @@ el('float-render').addEventListener('click', render);
 el('btn-download').addEventListener('click', download);
 el('btn-copy').addEventListener('click', copy);
 el('btn-archive').addEventListener('click', copyArchive);
+el('btn-latest').addEventListener('click', copyLatest);
 // Ctrl / ⌘ + Enter でプレビュー更新
 document.addEventListener('keydown', e=>{
   if((e.ctrlKey||e.metaKey) && e.key==='Enter'){ e.preventDefault(); render(); }
