@@ -179,7 +179,7 @@
       .menu-grid { grid-template-columns:1fr; max-width:400px; margin-left:auto; margin-right:auto; }
       .sub-nav { gap:.8rem; flex-wrap:wrap; }
     }
-      @media(max-width:768px){body{background-image:url("images/bg-wall-mobile.jpg")}}
+      @media(max-width:768px){body{background-image:none}body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;background-image:url("images/bg-wall-mobile.jpg");background-size:cover;background-position:center top;background-repeat:no-repeat}}
   </style>
 </head>
 <body data-lang="ja">
