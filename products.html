@@ -587,6 +587,133 @@
       }
     }
       @media(max-width:768px){body{background-image:none}body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;background-image:url("images/bg-wall-mobile.jpg");background-size:cover;background-position:center top;background-repeat:no-repeat}}
+
+    /* ── COURSE NAV ── */
+    .course-nav {
+      display: flex; justify-content: center; flex-wrap: wrap;
+      gap: .2rem; padding: 0 1.5rem; margin-bottom: 1rem;
+    }
+    .course-nav a {
+      display: flex; flex-direction: column; align-items: center; gap: .25rem;
+      padding: .7rem 1.5rem; text-decoration: none;
+      border-bottom: 1px solid transparent; transition: color .25s, border-color .25s;
+      color: rgba(240,235,224,.75);
+    }
+    .course-nav a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-pale); }
+    .course-nav .cn-jp { font-size: 15px; letter-spacing: .22em; }
+    .course-nav .cn-en {
+      font-family: var(--ff-en); font-size: 9px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold); 
+    }
+
+    /* ── COURSES ── */
+    .courses { padding: 2rem 0 6rem; }
+    .course { padding: 4.5rem 0; border-top: 1px solid rgba(212,184,122,.18); scroll-margin-top: 90px; }
+    .course:first-of-type { border-top: none; padding-top: 1rem; }
+    .course--finest { border-top-color: var(--gold); }
+
+    .course-head { text-align: center; margin-bottom: 3rem; }
+    .course-label {
+      font-family: var(--ff-en); font-size: 10px; letter-spacing: .5em;
+      text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .9rem;
+    }
+    .course-name {
+      font-size: clamp(26px, 4.5vw, 36px); font-weight: 400; letter-spacing: .3em;
+      color: rgba(240,235,224,.94); margin-bottom: 1.1rem; line-height: 1.5;
+    }
+    .course-lead {
+      font-size: 14px; letter-spacing: .08em; line-height: 2.2;
+      color: rgba(240,235,224,.72); margin-bottom: 1.6rem;
+    }
+    .course-meta {
+      display: flex; justify-content: center; align-items: baseline;
+      gap: 1.4rem; flex-wrap: wrap;
+    }
+    .course-spec { font-size: 12px; letter-spacing: .14em; color: rgba(240,235,224,.6); }
+    .course-price {
+      font-family: var(--ff-en); font-size: 18px; letter-spacing: .08em; color: var(--gold-pale);
+    }
+
+    /* ── TEA LIST ── */
+    .tea-list {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+      list-style: none; margin-bottom: 3.4rem;
+    }
+    .tea-list--one { grid-template-columns: 1fr; max-width: 340px; margin-left: auto; margin-right: auto; }
+    .tea {
+      text-align: center; padding: 1.6rem .8rem;
+      border: 1px solid rgba(212,184,122,.2); background: rgba(28,22,14,.32);
+    }
+    .tea-name {
+      font-size: 23px; font-weight: 400; letter-spacing: .18em;
+      color: rgba(240,235,224,.95); line-height: 1.5; margin-bottom: .35rem;
+    }
+    .tea-romaji {
+      font-family: var(--ff-en); font-size: 10px; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold-pale); margin-bottom: 1rem;
+    }
+    .tea-origin {
+      font-size: 11px; letter-spacing: .1em; color: var(--gold-pale);
+      margin-bottom: .5rem;
+    }
+    .tea-desc { font-size: 12.5px; line-height: 1.95; color: rgba(240,235,224,.74); }
+    .tea-limit {
+      display: inline-block; margin-top: .7rem; padding: .15rem .6rem;
+      font-size: 10px; letter-spacing: .12em; color: var(--gold-pale);
+      border: 1px solid rgba(212,184,122,.45);
+    }
+
+    /* ── BREW ROW ── */
+    .brew-row { display: grid; gap: 1rem; }
+    .brew-row--2 { grid-template-columns: repeat(2, 1fr); max-width: 600px; margin: 0 auto; }
+    .brew-row--3 { grid-template-columns: repeat(3, 1fr); }
+    .brew { margin: 0; }
+    .brew img {
+      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
+      border: 1px solid rgba(212,184,122,.2); filter: saturate(.97);
+    }
+    .brew figcaption {
+      margin-top: .75rem; text-align: center;
+      font-size: 11px; letter-spacing: .2em; color: rgba(240,235,224,.65);
+    }
+    .course-foot {
+      margin-top: 1.8rem; text-align: center;
+      font-size: 11.5px; letter-spacing: .08em; color: rgba(240,235,224,.55);
+    }
+
+    /* ── IPPUKU ── */
+    .ippuku-list {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;
+      list-style: none; max-width: 600px; margin: 0 auto;
+    }
+    .ippuku-item {
+      text-align: center; padding: 1.8rem 1rem;
+      border: 1px solid rgba(212,184,122,.2); background: rgba(28,22,14,.32);
+    }
+    .ippuku-name {
+      font-size: 19px; font-weight: 400; letter-spacing: .16em;
+      color: rgba(240,235,224,.95); margin-bottom: .6rem;
+    }
+    .ippuku-temp {
+      font-family: var(--ff-en); font-size: 11px; letter-spacing: .22em;
+      color: rgba(240,235,224,.6);
+    }
+
+    @media (max-width:768px) {
+      .course-nav { gap: 0; }
+      .course-nav a { padding: .6rem .9rem; }
+      .course-nav .cn-jp { font-size: 14px; letter-spacing: .16em; }
+      .course { padding: 3.5rem 0; }
+      .tea-list { gap: .6rem; }
+      .tea { padding: 1.1rem .4rem; }
+      .tea-name { font-size: 19px; letter-spacing: .1em; }
+      .tea-romaji { font-size: 9px; letter-spacing: .18em; margin-bottom: .7rem; }
+      .tea-desc { font-size: 11px; line-height: 1.8; }
+      .brew-row { gap: .5rem; }
+      .brew figcaption { font-size: 10px; letter-spacing: .12em; }
+      .ippuku-list { gap: .6rem; }
+    }
+
   </style>
 </head>
 
@@ -667,76 +794,171 @@
           are served as part of the course.<br />Please let us know in advance if you have any dietary restrictions or
           allergies.</p>
       </div>
-      <div class="cat-links reveal" style="transition-delay:.15s">
-        <a href="eat-in.html" class="cat-link">
-          <span class="bi-jp">EAT IN（店内飲食）</span>
-          <span class="bi-en">Eat In</span>
-        </a>
-        <a href="food.html" class="cat-link">
-          <span class="bi-jp">FOOD（お食事）</span>
-          <span class="bi-en">Food</span>
-        </a>
-        <a href="take-out.html" class="cat-link">
-          <span class="bi-jp">To Go / Takeaway（お持ち帰り）</span>
-          <span class="bi-en">To go / Takeaway</span>
-        </a>
-      </div>
     </div>
   </section>
 
-  <!-- PRODUCTS -->
-  <section class="products">
+  <!-- COURSE NAV -->
+  <nav class="course-nav reveal" aria-label="コース一覧">
+    <a href="#kissa"><span class="cn-jp">喫茶</span><span class="cn-en">Kissa</span></a>
+    <a href="#zanmai"><span class="cn-jp">三昧</span><span class="cn-en">Zanmai</span></a>
+    <a href="#shigoku"><span class="cn-jp">至極</span><span class="cn-en">Shigoku</span></a>
+    <a href="#ippuku"><span class="cn-jp">一服</span><span class="cn-en">Ippuku</span></a>
+  </nav>
+
+  <!-- COURSES -->
+  <div class="courses">
     <div class="section-wrap">
-      <div class="reveal">
-        <span class="section-en">Menu</span>
-        <div class="section-rule"></div>
+    <section class="course reveal" id="kissa">
+      <header class="course-head">
+        <span class="course-label">Kissa</span>
+        <h2 class="course-name">喫茶</h2>
+        <p class="course-lead"><span class="bi-jp">日々の一息　上質なお茶とお菓子を</span><span class="bi-en">A pause in the everyday — fine tea, with a sweet.</span></p>
+        <div class="course-meta">
+          <span class="course-spec"><span class="bi-jp">2煎　御菓子1品付</span><span class="bi-en">Two infusions · one sweet</span></span>
+          <span class="course-price">¥1,100</span>
+        </div>
+      </header>
+      <ul class="tea-list">
+        <li class="tea">
+          <p class="tea-name">鵲</p>
+          <p class="tea-romaji">Kasasagi</p>
+          <p class="tea-desc"><span class="bi-jp">力強い</span><span class="bi-en">Magpie — bold and full-bodied</span></p>
+        </li>
+        <li class="tea">
+          <p class="tea-name">梟</p>
+          <p class="tea-romaji">Fukurou</p>
+          <p class="tea-desc"><span class="bi-jp">白折・柔らかい甘み</span><span class="bi-en">Owl — shiraore, softly sweet</span></p>
+        </li>
+        <li class="tea">
+          <p class="tea-name">白鷺</p>
+          <p class="tea-romaji">Shirasagi</p>
+          <p class="tea-desc"><span class="bi-jp">白茶・上品な香り</span><span class="bi-en">Egret — white tea, refined aroma</span></p>
+          <span class="tea-limit"><span class="bi-jp">1日数量限定</span><span class="bi-en">Limited daily</span></span>
+        </li>
+      </ul>
+      <div class="brew-row brew-row--2">
+        <figure class="brew">
+          <img src="images/menu-kissa-01.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="喫茶 1煎目 — 鳥飼茶房 / 喫茶 First infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+        </figure>
+        <figure class="brew">
+          <img src="images/menu-kissa-02.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="喫茶 2煎目 — 鳥飼茶房 / 喫茶 Second infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+        </figure>
       </div>
+    </section>
 
-      <div class="product-grid">
-        <!-- EAT IN -->
-        <article class="product-card">
-          <div class="product-img-wrap">
-            <img class="product-img"
-              src="images/products-01.jpg"
-              alt="日本茶（EAT IN）— 希少な茶葉を使った極上の日本茶 / Premium Japanese tea with paired sweets" />
-          </div>
-          <div class="product-info">
-            <p class="product-category">Eat In</p>
-            <h3 class="product-name">
-              <span class="bi-jp">日本茶</span>
-              <span class="bi-en">Japanese Tea</span>
-            </h3>
-            <p class="product-desc">
-              <span class="bi-jp">希少な茶葉を使った、多様な味わいをもつ極上の日本茶。相性を考えたお菓子がついてきます。</span>
-              <span class="bi-en">Exquisite Japanese tea made from rare tea leaves, offering a rich variety of flavours.
-                Served with carefully paired sweets.</span>
-            </p>
-          </div>
-        </article>
-
-        <!-- TAKE OUT -->
-        <article class="product-card">
-          <div class="product-img-wrap">
-            <img class="product-img"
-              src="images/products-02.jpg"
-              alt="焙じ茶（TAKE OUT）— 香ばしい焙じ茶 / Aromatic roasted houjicha" />
-          </div>
-          <div class="product-info">
-            <p class="product-category">To Go / Takeaway</p>
-            <h3 class="product-name">
-              <span class="bi-jp">焙じ茶</span>
-              <span class="bi-en">Houjicha</span>
-            </h3>
-            <p class="product-desc">
-              <span class="bi-jp">香ばしく火を入れた焙じ茶。一杯ずつ芳り高く、急須でお淹れします。</span>
-              <span class="bi-en">Fragrant roasted houjicha, brewed one aromatic cup at a time in a traditional kyusu
-                teapot.</span>
-            </p>
-          </div>
-        </article>
+    <section class="course reveal" id="zanmai">
+      <header class="course-head">
+        <span class="course-label">Zanmai</span>
+        <h2 class="course-name">三昧</h2>
+        <p class="course-lead"><span class="bi-jp">特上　淹れ方を変えながら3煎</span><span class="bi-en">Superior grade — three infusions, each brewed a different way.</span></p>
+        <div class="course-meta">
+          <span class="course-spec"><span class="bi-jp">3煎　御菓子3品付</span><span class="bi-en">Three infusions · three sweets</span></span>
+          <span class="course-price">¥2,300</span>
+        </div>
+      </header>
+      <ul class="tea-list">
+        <li class="tea">
+          <p class="tea-name">雲雀</p>
+          <p class="tea-romaji">Hibari</p>
+          <p class="tea-desc"><span class="bi-jp">豊潤　ハーブのような後口</span><span class="bi-en">Skylark — rich, with a herbal finish</span></p>
+        </li>
+        <li class="tea">
+          <p class="tea-name">大瑠璃</p>
+          <p class="tea-romaji">Ooruri</p>
+          <p class="tea-desc"><span class="bi-jp">ジャスミン香　華やか</span><span class="bi-en">Blue-and-white flycatcher — jasmine aroma, floral</span></p>
+        </li>
+        <li class="tea">
+          <p class="tea-name">翡翠</p>
+          <p class="tea-romaji">Kawasemi</p>
+          <p class="tea-desc"><span class="bi-jp">フルーティー　爽やか</span><span class="bi-en">Kingfisher — fruity and refreshing</span></p>
+        </li>
+      </ul>
+      <div class="brew-row brew-row--3">
+        <figure class="brew">
+          <img src="images/menu-zanmai-01.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="三昧 1煎目 — 鳥飼茶房 / 三昧 First infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+        </figure>
+        <figure class="brew">
+          <img src="images/menu-zanmai-02.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="三昧 2煎目 — 鳥飼茶房 / 三昧 Second infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+        </figure>
+        <figure class="brew">
+          <img src="images/menu-zanmai-03.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="三昧 3煎目 — 鳥飼茶房 / 三昧 Third infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">3煎目</span><span class="bi-en">Third infusion</span></figcaption>
+        </figure>
       </div>
+      <p class="course-foot"><span class="bi-jp">※ お菓子は季節によって変わります</span><span class="bi-en">Sweets change with the season.</span></p>
+    </section>
+
+    <section class="course reveal course--finest" id="shigoku">
+      <header class="course-head">
+        <span class="course-label">Shigoku</span>
+        <h2 class="course-name">至極</h2>
+        <p class="course-lead"><span class="bi-jp">数量限定　極上を味わい尽くす</span><span class="bi-en">Limited quantity — the very finest, savoured to the last.</span></p>
+        <div class="course-meta">
+          <span class="course-spec"><span class="bi-jp">3煎　御菓子3品付</span><span class="bi-en">Three infusions · three sweets</span></span>
+          <span class="course-price">¥2,900</span>
+        </div>
+      </header>
+      <ul class="tea-list tea-list--one">
+        <li class="tea">
+          <p class="tea-name">鴬</p>
+          <p class="tea-romaji">Uguisu</p>
+          <p class="tea-origin"><span class="bi-jp">八女伝統本玉露</span><span class="bi-en">Yame traditional hon-gyokuro</span></p>
+          <p class="tea-desc"><span class="bi-jp">奥深く格別</span><span class="bi-en">Bush warbler — profound and exceptional</span></p>
+        </li>
+      </ul>
+      <div class="brew-row brew-row--3">
+        <figure class="brew">
+          <img src="images/menu-shigoku-01.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="至極 1煎目 — 鳥飼茶房 / 至極 First infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+        </figure>
+        <figure class="brew">
+          <img src="images/menu-shigoku-02.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="至極 2煎目 — 鳥飼茶房 / 至極 Second infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+        </figure>
+        <figure class="brew">
+          <img src="images/menu-shigoku-03.jpg" width="900" height="900" loading="lazy" decoding="async"
+               alt="至極 3煎目 — 鳥飼茶房 / 至極 Third infusion, Torikai Sabo" />
+          <figcaption><span class="bi-jp">3煎目</span><span class="bi-en">Third infusion</span></figcaption>
+        </figure>
+      </div>
+      <p class="course-foot"><span class="bi-jp">※ お菓子は季節によって変わります</span><span class="bi-en">Sweets change with the season.</span></p>
+    </section>
+
+    <section class="course reveal" id="ippuku">
+      <header class="course-head">
+        <span class="course-label">Ippuku</span>
+        <h2 class="course-name">一服</h2>
+        <p class="course-lead"><span class="bi-jp">ちょっと一煎　Take-Out も承ります</span><span class="bi-en">Just one cup — available to take away.</span></p>
+        <div class="course-meta">
+          <span class="course-spec"><span class="bi-jp">お持ち帰り可</span><span class="bi-en">Takeaway available</span></span>
+          <span class="course-price">¥600</span>
+        </div>
+      </header>
+      <ul class="ippuku-list">
+        <li class="ippuku-item">
+          <p class="ippuku-name"><span class="bi-jp">焙じ茶</span><span class="bi-en">Houjicha</span></p>
+          <p class="ippuku-temp">Hot / Iced</p>
+        </li>
+        <li class="ippuku-item">
+          <p class="ippuku-name"><span class="bi-jp">日替わり煎茶</span><span class="bi-en">Sencha of the day</span></p>
+          <p class="ippuku-temp">Hot / Iced</p>
+        </li>
+      </ul>
+    </section>
+
     </div>
-  </section>
+  </div>
 
   <!-- RESERVE -->
   <section class="reserve" aria-labelledby="reserve-title">
