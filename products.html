@@ -600,9 +600,9 @@
       color: rgba(240,235,224,.75);
     }
     .course-nav a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-pale); }
-    .course-nav .cn-jp { font-size: 15px; letter-spacing: .22em; }
+    .course-nav .cn-jp { font-size: 17px; letter-spacing: .22em; }
     .course-nav .cn-en {
-      font-family: var(--ff-en); font-size: 9px; letter-spacing: .3em;
+      font-family: var(--ff-en); font-size: 10.5px; letter-spacing: .3em;
       text-transform: uppercase; color: var(--gold); 
     }
 
@@ -614,24 +614,24 @@
 
     .course-head { text-align: center; margin-bottom: 3rem; }
     .course-label {
-      font-family: var(--ff-en); font-size: 10px; letter-spacing: .5em;
+      font-family: var(--ff-en); font-size: 11.5px; letter-spacing: .5em;
       text-transform: uppercase; color: var(--gold); display: block; margin-bottom: .9rem;
     }
     .course-name {
-      font-size: clamp(26px, 4.5vw, 36px); font-weight: 400; letter-spacing: .3em;
+      font-size: clamp(30px, 5vw, 42px); font-weight: 400; letter-spacing: .3em;
       color: rgba(240,235,224,.94); margin-bottom: 1.1rem; line-height: 1.5;
     }
     .course-lead {
-      font-size: 14px; letter-spacing: .08em; line-height: 2.2;
+      font-size: 16px; letter-spacing: .08em; line-height: 2.2;
       color: rgba(240,235,224,.72); margin-bottom: 1.6rem;
     }
     .course-meta {
       display: flex; justify-content: center; align-items: baseline;
       gap: 1.4rem; flex-wrap: wrap;
     }
-    .course-spec { font-size: 12px; letter-spacing: .14em; color: rgba(240,235,224,.6); }
+    .course-spec { font-size: 13.5px; letter-spacing: .14em; color: rgba(240,235,224,.6); }
     .course-price {
-      font-family: var(--ff-en); font-size: 18px; letter-spacing: .08em; color: var(--gold-pale);
+      font-family: var(--ff-en); font-size: 21px; letter-spacing: .08em; color: var(--gold-pale);
     }
 
     /* ── TEA LIST ── */
@@ -645,21 +645,21 @@
       border: 1px solid rgba(212,184,122,.2); background: rgba(28,22,14,.32);
     }
     .tea-name {
-      font-size: 23px; font-weight: 400; letter-spacing: .18em;
+      font-size: 26px; font-weight: 400; letter-spacing: .18em;
       color: rgba(240,235,224,.95); line-height: 1.5; margin-bottom: .35rem;
     }
     .tea-romaji {
-      font-family: var(--ff-en); font-size: 10px; letter-spacing: .3em;
+      font-family: var(--ff-en); font-size: 11.5px; letter-spacing: .3em;
       text-transform: uppercase; color: var(--gold-pale); margin-bottom: 1rem;
     }
     .tea-origin {
-      font-size: 11px; letter-spacing: .1em; color: var(--gold-pale);
+      font-size: 12.5px; letter-spacing: .1em; color: var(--gold-pale);
       margin-bottom: .5rem;
     }
-    .tea-desc { font-size: 12.5px; line-height: 1.95; color: rgba(240,235,224,.74); }
+    .tea-desc { font-size: 14px; line-height: 1.95; color: rgba(240,235,224,.74); }
     .tea-limit {
       display: inline-block; margin-top: .7rem; padding: .15rem .6rem;
-      font-size: 10px; letter-spacing: .12em; color: var(--gold-pale);
+      font-size: 11.5px; letter-spacing: .12em; color: var(--gold-pale);
       border: 1px solid rgba(212,184,122,.45);
     }
 
@@ -669,16 +669,16 @@
     .brew-row--3 { grid-template-columns: repeat(3, 1fr); }
     .brew { margin: 0; }
     .brew img {
-      width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block;
+      width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; display: block;
       border: 1px solid rgba(212,184,122,.2); filter: saturate(.97);
     }
     .brew figcaption {
       margin-top: .75rem; text-align: center;
-      font-size: 11px; letter-spacing: .2em; color: rgba(240,235,224,.65);
+      font-size: 13px; letter-spacing: .2em; color: rgba(240,235,224,.65);
     }
     .course-foot {
       margin-top: 1.8rem; text-align: center;
-      font-size: 11.5px; letter-spacing: .08em; color: rgba(240,235,224,.55);
+      font-size: 13px; letter-spacing: .08em; color: rgba(240,235,224,.55);
     }
 
     /* ── IPPUKU ── */
@@ -691,26 +691,27 @@
       border: 1px solid rgba(212,184,122,.2); background: rgba(28,22,14,.32);
     }
     .ippuku-name {
-      font-size: 19px; font-weight: 400; letter-spacing: .16em;
+      font-size: 22px; font-weight: 400; letter-spacing: .16em;
       color: rgba(240,235,224,.95); margin-bottom: .6rem;
     }
     .ippuku-temp {
-      font-family: var(--ff-en); font-size: 11px; letter-spacing: .22em;
+      font-family: var(--ff-en); font-size: 12.5px; letter-spacing: .22em;
       color: rgba(240,235,224,.6);
     }
 
     @media (max-width:768px) {
       .course-nav { gap: 0; }
       .course-nav a { padding: .6rem .9rem; }
-      .course-nav .cn-jp { font-size: 14px; letter-spacing: .16em; }
+      .course-nav .cn-jp { font-size: 16px; letter-spacing: .14em; }
       .course { padding: 3.5rem 0; }
       .tea-list { gap: .6rem; }
+      [data-lang="en"] .tea-list { grid-template-columns: 1fr; }
       .tea { padding: 1.1rem .4rem; }
-      .tea-name { font-size: 19px; letter-spacing: .1em; }
-      .tea-romaji { font-size: 9px; letter-spacing: .18em; margin-bottom: .7rem; }
-      .tea-desc { font-size: 11px; line-height: 1.8; }
+      .tea-name { font-size: 21px; letter-spacing: .06em; }
+      .tea-romaji { font-size: 10px; letter-spacing: .12em; margin-bottom: .7rem; }
+      .tea-desc { font-size: 12.5px; line-height: 1.85; }
       .brew-row { gap: .5rem; }
-      .brew figcaption { font-size: 10px; letter-spacing: .12em; }
+      .brew figcaption { font-size: 11.5px; letter-spacing: .12em; }
       .ippuku-list { gap: .6rem; }
     }
 
