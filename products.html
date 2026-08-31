@@ -636,13 +636,22 @@
 
     /* ── TEA LIST ── */
     .tea-list {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
       list-style: none; margin-bottom: 3.4rem;
+      border: 1px solid rgba(212,184,122,.3); background: rgba(28,22,14,.34);
     }
     .tea-list--one { grid-template-columns: 1fr; max-width: 340px; margin-left: auto; margin-right: auto; }
     .tea {
-      text-align: center; padding: 1.6rem .8rem;
-      border: 1px solid rgba(212,184,122,.2); background: rgba(28,22,14,.32);
+      text-align: center; padding: 1.8rem 1rem;
+      border-left: 1px solid rgba(212,184,122,.16);
+    }
+    .tea:first-child { border-left: none; }
+
+    /* 手順表示 */
+    .step { text-align: center; margin-bottom: 1.6rem; }
+    .step-text {
+      font-size: 14px; letter-spacing: .1em; line-height: 1.95;
+      color: rgba(240,235,224,.7);
     }
     .tea-name {
       font-size: 26px; font-weight: 400; letter-spacing: .18em;
@@ -673,9 +682,14 @@
       border: 1px solid rgba(212,184,122,.2); filter: saturate(.97);
     }
     .brew figcaption {
-      margin-top: .75rem; text-align: center;
-      font-size: 13px; letter-spacing: .2em; color: rgba(240,235,224,.65);
+      margin-top: .95rem; text-align: center;
+      font-size: 15px; letter-spacing: .18em; color: rgba(240,235,224,.84);
     }
+    .brew-num {
+      font-family: var(--ff-en); font-size: 1.32em; letter-spacing: .04em;
+      color: var(--gold-pale); margin-right: .2em;
+    }
+
     .course-foot {
       margin-top: 1.8rem; text-align: center;
       font-size: 13px; letter-spacing: .08em; color: rgba(240,235,224,.55);
@@ -704,14 +718,17 @@
       .course-nav a { padding: .6rem .9rem; }
       .course-nav .cn-jp { font-size: 16px; letter-spacing: .14em; }
       .course { padding: 3.5rem 0; }
-      .tea-list { gap: .6rem; }
+      .tea-list { gap: 0; }
       [data-lang="en"] .tea-list { grid-template-columns: 1fr; }
-      .tea { padding: 1.1rem .4rem; }
+      [data-lang="en"] .tea { border-left: none; border-top: 1px solid rgba(212,184,122,.16); }
+      [data-lang="en"] .tea:first-child { border-top: none; }
+      .step-text { font-size: 12.5px; letter-spacing: .06em; line-height: 1.85; }
+      .tea { padding: 1.2rem .35rem; }
       .tea-name { font-size: 21px; letter-spacing: .06em; }
       .tea-romaji { font-size: 10px; letter-spacing: .12em; margin-bottom: .7rem; }
       .tea-desc { font-size: 12.5px; line-height: 1.85; }
       .brew-row { gap: .5rem; }
-      .brew figcaption { font-size: 11.5px; letter-spacing: .12em; }
+      .brew figcaption { font-size: 13px; letter-spacing: .06em; margin-top: .7rem; }
       .ippuku-list { gap: .6rem; }
     }
 
@@ -819,6 +836,9 @@
           <span class="course-price">¥1,100</span>
         </div>
       </header>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">三種より、お好みの一種をお選びください</span><span class="bi-en">Choose one tea from the three.</span></p>
+      </div>
       <ul class="tea-list">
         <li class="tea">
           <p class="tea-name">鵲</p>
@@ -837,16 +857,19 @@
           <span class="tea-limit"><span class="bi-jp">1日数量限定</span><span class="bi-en">Limited daily</span></span>
         </li>
       </ul>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">お選びいただいた一種を、二煎お淹れします</span><span class="bi-en">Your chosen tea, served as two infusions.</span></p>
+      </div>
       <div class="brew-row brew-row--2">
         <figure class="brew">
           <img src="images/menu-kissa-01.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="喫茶 1煎目 — 鳥飼茶房 / 喫茶 First infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">1</span>煎目</span><span class="bi-en">First infusion</span></figcaption>
         </figure>
         <figure class="brew">
           <img src="images/menu-kissa-02.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="喫茶 2煎目 — 鳥飼茶房 / 喫茶 Second infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">2</span>煎目</span><span class="bi-en">Second infusion</span></figcaption>
         </figure>
       </div>
     </section>
@@ -861,6 +884,9 @@
           <span class="course-price">¥2,300</span>
         </div>
       </header>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">三種より、お好みの一種をお選びください</span><span class="bi-en">Choose one tea from the three.</span></p>
+      </div>
       <ul class="tea-list">
         <li class="tea">
           <p class="tea-name">雲雀</p>
@@ -878,21 +904,24 @@
           <p class="tea-desc"><span class="bi-jp">フルーティー　爽やか</span><span class="bi-en">Kingfisher — fruity and refreshing</span></p>
         </li>
       </ul>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">お選びいただいた一種を、淹れ方を変えながら三煎</span><span class="bi-en">Your chosen tea, brewed differently across three infusions.</span></p>
+      </div>
       <div class="brew-row brew-row--3">
         <figure class="brew">
           <img src="images/menu-zanmai-01.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="三昧 1煎目 — 鳥飼茶房 / 三昧 First infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">1</span>煎目</span><span class="bi-en">First infusion</span></figcaption>
         </figure>
         <figure class="brew">
           <img src="images/menu-zanmai-02.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="三昧 2煎目 — 鳥飼茶房 / 三昧 Second infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">2</span>煎目</span><span class="bi-en">Second infusion</span></figcaption>
         </figure>
         <figure class="brew">
           <img src="images/menu-zanmai-03.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="三昧 3煎目 — 鳥飼茶房 / 三昧 Third infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">3煎目</span><span class="bi-en">Third infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">3</span>煎目</span><span class="bi-en">Third infusion</span></figcaption>
         </figure>
       </div>
       <p class="course-foot"><span class="bi-jp">※ お菓子は季節によって変わります</span><span class="bi-en">Sweets change with the season.</span></p>
@@ -908,6 +937,9 @@
           <span class="course-price">¥2,900</span>
         </div>
       </header>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">茶葉は一種、八女伝統本玉露のみ</span><span class="bi-en">A single tea — traditional Yame hon-gyokuro.</span></p>
+      </div>
       <ul class="tea-list tea-list--one">
         <li class="tea">
           <p class="tea-name">鴬</p>
@@ -916,21 +948,24 @@
           <p class="tea-desc"><span class="bi-jp">奥深く格別</span><span class="bi-en">Bush warbler — profound and exceptional</span></p>
         </li>
       </ul>
+      <div class="step">
+        <p class="step-text"><span class="bi-jp">三煎お淹れします</span><span class="bi-en">Served as three infusions.</span></p>
+      </div>
       <div class="brew-row brew-row--3">
         <figure class="brew">
           <img src="images/menu-shigoku-01.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="至極 1煎目 — 鳥飼茶房 / 至極 First infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">1煎目</span><span class="bi-en">First infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">1</span>煎目</span><span class="bi-en">First infusion</span></figcaption>
         </figure>
         <figure class="brew">
           <img src="images/menu-shigoku-02.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="至極 2煎目 — 鳥飼茶房 / 至極 Second infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">2煎目</span><span class="bi-en">Second infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">2</span>煎目</span><span class="bi-en">Second infusion</span></figcaption>
         </figure>
         <figure class="brew">
           <img src="images/menu-shigoku-03.jpg" width="900" height="900" loading="lazy" decoding="async"
                alt="至極 3煎目 — 鳥飼茶房 / 至極 Third infusion, Torikai Sabo" />
-          <figcaption><span class="bi-jp">3煎目</span><span class="bi-en">Third infusion</span></figcaption>
+          <figcaption><span class="bi-jp"><span class="brew-num">3</span>煎目</span><span class="bi-en">Third infusion</span></figcaption>
         </figure>
       </div>
       <p class="course-foot"><span class="bi-jp">※ お菓子は季節によって変わります</span><span class="bi-en">Sweets change with the season.</span></p>
