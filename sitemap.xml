@@ -32,12 +32,18 @@
   </url>
   <url>
     <loc>https://www.torikai-sabo.com/blog.html</loc>
-    <lastmod>2026-09-14</lastmod>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- ブログ個別記事 -->
+  <url>
+    <loc>https://www.torikai-sabo.com/post-2026-09-30.html</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
   <url>
     <loc>https://www.torikai-sabo.com/post-2026-09-14.html</loc>
     <lastmod>2026-09-14</lastmod>
