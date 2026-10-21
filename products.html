@@ -586,6 +586,18 @@
         align-items: center;
       }
     }
+    /* ONLINE SHOP BAND */
+    .shop-band { padding: 7rem 0; background: transparent; border-top: 1px solid var(--border); }
+    .shop-band .section-header { text-align: center; }
+    .shop-band .section-title { color: var(--paper); }
+    .shop-band .section-rule { background: var(--gold-pale); margin-left: auto; margin-right: auto; }
+    .shop-card { max-width: 640px; margin: 0 auto; padding: 3.5rem 2.5rem; text-align: center; background: rgba(248,244,238,0.9); border: 1px solid rgba(90,70,40,0.1); border-radius: 8px; box-shadow: 0 4px 30px rgba(0,0,0,0.12); }
+    .shop-card .shop-lead { font-size: clamp(16px,2.2vw,19px); font-weight: 500; letter-spacing: .14em; line-height: 2.1; color: var(--ink); margin-bottom: 2.4rem; }
+    .shop-card .shop-lead .nb { display: inline-block; }
+    .shop-card .shop-btn { display: inline-block; padding: 14px 48px; background: var(--matcha); color: #fff; font-family: var(--ff-jp); font-size: 13px; letter-spacing: .22em; border: 1px solid var(--matcha); text-decoration: none; transition: all .25s; }
+    .shop-card .shop-btn:hover { background: transparent; color: var(--matcha); }
+    .shop-card .shop-note { font-size: 12px; letter-spacing: .08em; color: var(--ink-soft); margin-top: 1.4rem; }
+    @media (max-width:768px) { .shop-band { padding: 5rem 0; } .shop-card { padding: 2.8rem 1.4rem; border-radius: 6px; } .shop-card .shop-btn { padding: 13px 30px; } }
       @media(max-width:768px){body{background-image:none}body::before{content:"";position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;background-image:url("images/bg-wall-mobile.jpg");background-size:cover;background-position:center top;background-repeat:no-repeat}}
 
     /* ── COURSE NAV ── */
@@ -995,6 +1007,25 @@
 
     </div>
   </div>
+
+  <!-- ONLINE SHOP -->
+  <section class="shop-band" id="shop" aria-labelledby="shop-title">
+    <div class="section-wrap">
+      <div class="section-header reveal">
+        <span class="section-en">Online Shop</span>
+        <h2 class="section-title" id="shop-title">
+          <span class="bi-jp">オンラインショップ</span>
+          <span class="bi-en">Online Shop</span>
+        </h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="shop-card reveal">
+        <p class="shop-lead"><span class="bi-jp"><span class="nb">一人時間、</span><span class="nb">家族団欒、</span><br/><span class="nb">大切なあの人への</span><span class="nb">贈りものに、</span><br/><span class="nb">良いお茶を。</span></span><span class="bi-en">For time to yourself, for family gatherings,<br/>as a gift for someone dear — good tea.</span></p>
+        <a href="https://torikaisabo.base.shop/" class="shop-btn" target="_blank" rel="noopener"><span class="bi-jp">オンラインショップへ</span><span class="bi-en">Visit the Online Shop</span></a>
+        <p class="shop-note"><span class="bi-jp">※ 外部サイト（BASE）が開きます</span><span class="bi-en">Opens BASE in a new tab.</span></p>
+      </div>
+    </div>
+  </section>
 
   <!-- RESERVE -->
   <section class="reserve" aria-labelledby="reserve-title">
